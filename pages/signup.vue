@@ -4,6 +4,14 @@
   </div>
 </template>
 
+<script>
+export default {
+  mounted() {
+    console.log(process.env.FIREBASE_API_KEY)
+  }
+}
+</script>
+
 <style scoped>
 .container {
   margin: 0 auto;

@@ -1,3 +1,14 @@
+require('dotenv').config();
+const {
+  FIREBASE_API_KEY,
+  FIREBASE_AUTH_DOMAIN,
+  FIREBASE_DATABASE_URL,
+  FIREBASE_PROJECT_ID,
+  FIREBASE_STORAGE_BUCKET,
+  FIREBASE_MESSAGINGSENDERID,
+  FIREBASE_APP_ID,
+  FIREBASE_MEASUREMENT_ID
+} = process.env;
 
 export default {
   mode: 'spa',
@@ -53,5 +64,15 @@ export default {
     */
     extend (config, ctx) {
     }
+  },
+  env: {
+    FIREBASE_API_KEY,
+    FIREBASE_AUTH_DOMAIN,
+    FIREBASE_DATABASE_URL,
+    FIREBASE_PROJECT_ID,
+    FIREBASE_STORAGE_BUCKET,
+    FIREBASE_MESSAGINGSENDERID,
+    FIREBASE_APP_ID,
+    FIREBASE_MEASUREMENT_ID
   }
 }
