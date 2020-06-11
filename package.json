@@ -1,0 +1,21 @@
+{
+  "name": "cupping_a_coffee",
+  "version": "1.0.0",
+  "description": "My striking Nuxt.js project",
+  "author": "aiirononeko",
+  "private": true,
+  "scripts": {
+    "dev": "nuxt",
+    "build": "nuxt build",
+    "start": "nuxt start",
+    "generate": "nuxt generate"
+  },
+  "dependencies": {
+    "nuxt": "^2.0.0",
+    "@nuxtjs/dotenv": "^1.4.0"
+  },
+  "devDependencies": {
+    "@nuxt/typescript-build": "^0.6.0",
+    "@nuxtjs/tailwindcss": "^1.0.0"
+  }
+}
