@@ -1,6 +1,11 @@
 <template>
   <div class="container">
     <h2 class="title">まずはローストレベルを確認しましょう</h2>
+    <div class="buttons">
+      <button class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded-l buttons_item">ダーク</button>
+      <button class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded-l buttons_item">ミディアム</button>
+      <button class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded-l buttons_item">ライト</button>
+    </div>
     <nuxt-link to="/cupping/dryAroma">次に進む</nuxt-link>
   </div>
 </template>
@@ -24,5 +29,14 @@
   font-size: 30px;
   color: #35495e;
   letter-spacing: 1px;
+}
+
+.buttons {
+  display: flex;
+  flex-direction: row;
+}
+
+.buttons_item {
+  margin-left: 10px;
 }
 </style>
