@@ -6,6 +6,7 @@
     <div>
       <h2 class="title">{{ uid }}さんがカッピングしたコーヒー</h2>
     </div>
+    <nuxt-link to="/">トップページに戻る</nuxt-link>
   </div>
 </template>
 
