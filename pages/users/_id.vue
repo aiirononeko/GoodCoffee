@@ -9,7 +9,7 @@
         <List :result_id="result" />
       </div>
     </div>
-    <nuxt-link to="/">トップページに戻る</nuxt-link>
+    <button @click="signOut">サインアウト</button>
   </div>
 </template>
 
@@ -56,6 +56,11 @@ export default {
   methods: {
     startCupping() {
       this.$router.push('/cupping/roastLevel')
+    },
+    signOut() {
+      firebase.auth().signOut().then(() => {
+        this.$router.push('/signin')
+      })
     }
   }
 }
