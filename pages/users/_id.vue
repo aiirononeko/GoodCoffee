@@ -57,24 +57,24 @@ export default {
     createCuppingData() { // 開発用メソッド（機能開発後に削除）
       const cuppingResult = {
         uid: this.uid,
-        country: 'インドネシア',
-        farmer: 'リム',
-        elevation: 2000,
-        process: 'ナチュラル',
+        country: 'コスタリカ',
+        farmer: 'ドンマヨ',
+        elevation: 1800,
+        process: 'ハニー',
         variety: 'ブルボン',
-        roastLeval: 50, // 1~100
-        dryAroma: '強い',
-        crustAroma: '強い',
-        breakAroma: '強い',
-        cleanCup: 8,
-        sweet: 8,
-        acidity: 8,
-        mouseFeel: 8,
-        flavor: 8,
-        afterTaste: 8,
-        balance: 8,
-        overall: 8,
-        score: 85.1
+        roastLeval: 30, // 1~100
+        dryAroma: '普通',
+        crustAroma: '普通',
+        breakAroma: '普通',
+        cleanCup: 7.5,
+        sweet: 7,
+        acidity: 7,
+        mouseFeel: 6.5,
+        flavor: 6,
+        afterTaste: 7,
+        balance: 7.5,
+        overAll: 7.5,
+        score: 87.3
       }
       const db = firebase.firestore()
       const coffeeRef = db.collection('coffee')

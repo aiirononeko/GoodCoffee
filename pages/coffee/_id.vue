@@ -3,7 +3,18 @@
     <div>
       <h1 class="title">{{ country }} {{ farmer }} {{ process }}</h1>
     </div>
-    <div></div>
+    <div>
+      <Chart
+        :cleanCup="cleanCup"
+        :sweet="sweet"
+        :acidity="acidity"
+        :mouseFeel="mouseFeel"
+        :flavor="flavor"
+        :afterTaste="afterTaste"
+        :balance="balance"
+        :overAll="overAll"
+      />
+    </div>
     <div>
       <h2>Score {{ score }}</h2>
     </div>
@@ -17,8 +28,12 @@
 
 <script>
 import firebase from '~/plugins/firebase'
+import Chart from '~/components/RaderChart.vue'
 
 export default {
+  components: {
+    Chart
+  },
   data() {
     return {
       uid: '',
@@ -39,47 +54,47 @@ export default {
       flavor: 0,
       afterTaste: 0,
       balance: 0,
-      overall: 0,
+      overAll: 0,
       score: 0
     }
   },
-  beforeMount() {
-    this.id = this.$route.params.id
-    firebase.auth().onAuthStateChanged(user => {
-      if (user) {
-        this.uid = user.uid
-        // if (this.uid != this.$route.params.id) {
-        //   this.$router.push(`/users/${this.uid}`) // 自分以外のリザルトにアクセスできない
-        // }
-      } else {
-        this.$router.push('/signin') // ログイン状態でなければマイページにアクセスできない
-      }
+  async beforeCreate() {
+    this.$nextTick(async () => {
+      this.id = this.$route.params.id
+      await firebase.auth().onAuthStateChanged(async user => {
+        if (user) {
+          this.uid = user.uid
+          // if (this.uid != this.$route.params.id) {
+          //   this.$router.push(`/users/${this.uid}`) // 自分以外のリザルトにアクセスできない
+          // }
+          const db = firebase.firestore()
+          const coffeeRef = db.collection('coffee').doc(this.id)
+          await coffeeRef.get().then(doc => {
+            this.country = doc.data().country
+            this.farmer = doc.data().farmer
+            this.elevation = doc.data().elevation
+            this.process = doc.data().process
+            this.variety = doc.data().variety
+            this.roastLeval = doc.data().roastLeval
+            this.dryAroma = doc.data().dryAroma
+            this.crustAroma = doc.data().crustAroma
+            this.breakAroma = doc.data().breakAroma
+            this.cleanCup = doc.data().cleanCup
+            this.sweet = doc.data().sweet
+            this.acidity = doc.data().acidity
+            this.mouseFeel = doc.data().mouseFeel
+            this.flavor = doc.data().flavor
+            this.afterTaste = doc.data().afterTaste
+            this.balance = doc.data().balance
+            this.overAll = doc.data().overAll
+            this.score = doc.data().score
+          })
+        } else {
+          this.$router.push('/signin') // ログイン状態でなければアクセスできない
+        }
+      })
     })
   },
-  mounted() {
-    const db = firebase.firestore()
-    const coffeeRef = db.collection('coffee').doc(this.id)
-    coffeeRef.get().then(doc => {
-      this.country = doc.data().country
-      this.farmer = doc.data().farmer
-      this.elevation = doc.data().elevation
-      this.process = doc.data().process
-      this.variety = doc.data().variety
-      this.roastLeval = doc.data().roastLeval
-      this.dryAroma = doc.data().dryAroma
-      this.crustAroma = doc.data().crustAroma
-      this.breakAroma = doc.data().breakAroma
-      this.cleanCup = doc.data().cleanCup
-      this.sweet = doc.data().sweet
-      this.acidity = doc.data().acidity
-      this.mouseFeel = doc.data().mouseFeel
-      this.flavor = doc.data().flavor
-      this.afterTaste = doc.data().afterTaste
-      this.balance = doc.data().balance
-      this.overall = doc.data().overall
-      this.score = doc.data().score
-    })
-  }
 }
 </script>
 
