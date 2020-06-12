@@ -14,15 +14,7 @@
       overAll: Number,
     },
     mounted() {
-      setTimeout(() => {
-        console.log(this.cleanCup)
-        console.log(this.sweet)
-        console.log(this.acidity)
-        console.log(this.mouseFeel)
-        console.log(this.flavor)
-        console.log(this.afterTaste)
-        console.log(this.balance)
-        console.log(this.overall)
+      setTimeout(() => { // TODO 非同期処理をきちんと書いて実装できないかな。。
         const data = {
           labels: ['CleanCup', 'Sweet', 'Acidity', 'MouseFeel', 'Flavor', 'AfterTaste', 'Balance', 'OverAll'],
           datasets: [{
