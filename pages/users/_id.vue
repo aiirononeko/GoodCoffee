@@ -57,39 +57,6 @@ export default {
     startCupping() {
       this.$router.push('/cupping/roastLevel')
     }
-    // createCuppingData() { // 開発用メソッド（機能開発後に削除）
-    //   const cuppingResult = {
-    //     uid: this.uid,
-    //     country: 'コスタリカ',
-    //     farmer: 'ドンマヨ',
-    //     elevation: 1800,
-    //     process: 'ハニー',
-    //     variety: 'ブルボン',
-    //     roastLeval: 30, // 1~100
-    //     dryAroma: '普通',
-    //     crustAroma: '普通',
-    //     breakAroma: '普通',
-    //     cleanCup: 7.5,
-    //     sweet: 7,
-    //     acidity: 7,
-    //     mouseFeel: 6.5,
-    //     flavor: 6,
-    //     afterTaste: 7,
-    //     balance: 7.5,
-    //     overAll: 7.5,
-    //     score: 87.3
-    //   }
-    //   const db = firebase.firestore()
-    //   const coffeeRef = db.collection('coffee')
-    //   coffeeRef.add(cuppingResult).then(res => {
-    //     console.log('success')
-    //     const cuppingResultsRef
-    //       = db.collection('users').doc(this.uid).collection('cupping_results').doc(res.id)
-    //     cuppingResultsRef.set({ result_id: res.id }) // カッピングリザルトをusersコレクションのサブコレクションとして保存
-    //   }).catch(err => {
-    //     console.log(err.message)
-    //   })
-    // }
   }
 }
 </script>

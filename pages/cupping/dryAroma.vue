@@ -3,13 +3,37 @@
     <h2 class="title">10gの豆を計量し、中粗挽きで挽きましょう</h2>
     <h2 class="title">ドライの状態のアロマはいかがですか？</h2>
     <div class="buttons">
-      <button class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded-l buttons_item">強い</button>
-      <button class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded-l buttons_item">普通</button>
-      <button class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded-l buttons_item">弱い</button>
+      <button @click="setDryAromaForce" class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded-l buttons_item">強い</button>
+      <button @click="setDryAromaMedium" class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded-l buttons_item">普通</button>
+      <button @click="setDryAromaLight" class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded-l buttons_item">弱い</button>
     </div>
     <nuxt-link to="/cupping/timer">次に進む</nuxt-link>
   </div>
 </template>
+
+<script>
+export default {
+  data() {
+    return {
+      dryAroma: '',
+    }
+  },
+  methods: {
+    setDryAromaForce() {
+      this.dryAroma = '強い'
+      this.$store.commit('cuppingResult/setDryAroma', this.dryAroma)
+    },
+    setDryAromaMedium() {
+      this.dryAroma = '普通'
+      this.$store.commit('cuppingResult/setDryAroma', this.dryAroma)
+    },
+    setDryAromaLight() {
+      this.dryAroma = '軽い'
+      this.$store.commit('cuppingResult/setDryAroma', this.dryAroma)
+    }
+  }
+}
+</script>
 
 <style scoped>
 .container {
