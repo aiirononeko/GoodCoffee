@@ -5,6 +5,9 @@
     </div>
     <div>
       <h2 class="title">{{ uid }}さんがカッピングしたコーヒー</h2>
+      <div v-for="(result, i) in cuppingResult" :key="i">
+        <List :result_id="result" />
+      </div>
     </div>
     <nuxt-link to="/">トップページに戻る</nuxt-link>
   </div>
@@ -12,8 +15,12 @@
 
 <script>
 import firebase from '~/plugins/firebase'
+import List from '~/components/coppingResultsList'
 
 export default {
+  components: {
+    List
+  },
   data() {
     return {
       uid: '',
@@ -50,8 +57,8 @@ export default {
     createCuppingData() { // 開発用メソッド（機能開発後に削除）
       const cuppingResult = {
         uid: this.uid,
-        country: 'コスタリカ',
-        farmer: 'ドンマヨ',
+        country: 'インドネシア',
+        farmer: 'リム',
         elevation: 2000,
         process: 'ナチュラル',
         variety: 'ブルボン',
