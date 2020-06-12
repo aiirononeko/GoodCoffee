@@ -20,7 +20,6 @@ import firebase from '~/plugins/firebase'
 export default {
   data() {
     return {
-      uid: '',
       email: '',
       password: '',
     }
@@ -28,8 +27,7 @@ export default {
   beforeMount() {
     firebase.auth().onAuthStateChanged(user => {
       if (user) {
-        this.uid = user.uid
-        console.log(this.uid) // ログイン状態ならマイページに移動&アラート
+        this.$router.push(`/users/${user.uid}`)
       }
     })
   },
@@ -37,12 +35,12 @@ export default {
     signUpWithEmail() {
       firebase.auth().createUserWithEmailAndPassword(this.email, this.password).then(result => {
         const userInfo = {
-          uid: result.user.uid
+          uid: result.user.uid,
         }
         const db = firebase.firestore()
         const usersRef = db.collection('users').doc(result.user.uid)
         usersRef.set(userInfo).then(res => {
-          console.log('userInfo added.') // データの追加に成功したらマイページに移動
+          this.$router.push(`/users/${result.user.uid}`)
         }).catch(err => {
           console.log(err.message)
         })

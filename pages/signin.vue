@@ -10,6 +10,7 @@
       <input type="password" v-model="password"><br>
       <button @click="loginWithEmail" class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded-l user_form_items">ログインする</button>
     </div>
+    <nuxt-link to="/signup">アカウントをお持ちでない方はこちら</nuxt-link>
     <nuxt-link to="/">トップページに戻る</nuxt-link>
   </div>
 </template>
@@ -20,7 +21,6 @@ import firebase from '~/plugins/firebase'
 export default {
   data() {
     return {
-      uid: '',
       email: '',
       password: '',
     }
@@ -28,16 +28,14 @@ export default {
   beforeMount() {
     firebase.auth().onAuthStateChanged(user => {
       if (user) {
-        this.uid = user.uid
-        console.log(this.uid) // ログイン状態ならリダイレクト
+        this.$router.push(`/users/${user.uid}`)
       }
     })
   },
   methods: {
     loginWithEmail() {
       firebase.auth().signInWithEmailAndPassword(this.email, this.password).then(result => {
-        console.log('success!')
-        console.log(result)
+        this.$router.push(`/users/${result.user.uid}`)
       }).catch(err => {
         console.log(err.message)
       })
