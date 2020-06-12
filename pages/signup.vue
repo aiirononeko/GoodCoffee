@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="container">
     <div>
       <h2 class="title">アカウントを作成しましょう</h2>
     </div>
@@ -10,24 +10,42 @@
       <input type="password" v-model="password"><br>
       <button @click="signUpWithEmail" class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded-l user_form_items">登録</button>
     </div>
+    <nuxt-link to="/">トップページに戻る</nuxt-link>
   </div>
 </template>
 
 <script>
 import firebase from '~/plugins/firebase'
-import { auth } from 'firebase'
 
 export default {
   data() {
     return {
+      uid: '',
       email: '',
       password: '',
     }
   },
+  beforeMount() {
+    firebase.auth().onAuthStateChanged(user => {
+      if (user) {
+        this.uid = user.uid
+        console.log(this.uid) // ログイン状態ならマイページに移動&アラート
+      }
+    })
+  },
   methods: {
     signUpWithEmail() {
-      auth().createUserWithEmailAndPassword(this.email, this.password).then(res => {
-        console.log('success!')
+      firebase.auth().createUserWithEmailAndPassword(this.email, this.password).then(result => {
+        const userInfo = {
+          uid: result.user.uid
+        }
+        const db = firebase.firestore()
+        const usersRef = db.collection('users').doc(result.user.uid)
+        usersRef.set(userInfo).then(res => {
+          console.log('userInfo added.') // データの追加に成功したらマイページに移動
+        }).catch(err => {
+          console.log(err.message)
+        })
       }).catch(err => {
         console.log(err.message)
       })
@@ -41,6 +59,7 @@ export default {
   margin: 0 auto;
   min-height: 100vh;
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   text-align: center;
