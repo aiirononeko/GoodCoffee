@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <div>
-      <button class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded-l user_form_items">カッピングを始める</button>
+      <button @click="createCuppingData" class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded-l user_form_items">カッピングを始める</button>
     </div>
     <div>
       <h2 class="title">{{ uid }}さんがカッピングしたコーヒー</h2>
@@ -16,20 +16,70 @@ export default {
   data() {
     return {
       uid: '',
+      cuppingResult: [],
     }
   },
   beforeMount() {
+    /**
+     * ログイン状態管理.
+     */
     firebase.auth().onAuthStateChanged(user => {
       if (user) {
         this.uid = user.uid
         if (this.uid != this.$route.params.id) {
           this.$router.push(`/users/${this.uid}`) // 自分以外のマイページにアクセスできない
         }
+        /**
+         * カッピングリザルト取得.
+         */
+        const cuppingResultsRef = firebase.firestore().collection('users').doc(this.uid).collection('cupping_results')
+        cuppingResultsRef.get().then(snapshot => {
+          if (snapshot) {
+            snapshot.forEach(doc => {
+              this.cuppingResult.push(doc.data())
+            })
+          }
+        })
       } else {
         this.$router.push('/signin') // ログイン状態でなければマイページにアクセスできない
       }
     })
   },
+  methods: {
+    createCuppingData() { // 開発用メソッド（機能開発後に削除）
+      const cuppingResult = {
+        uid: this.uid,
+        country: 'コスタリカ',
+        farmer: 'ドンマヨ',
+        elevation: 2000,
+        process: 'ナチュラル',
+        variety: 'ブルボン',
+        roastLeval: 50, // 1~100
+        dryAroma: '強い',
+        crustAroma: '強い',
+        breakAroma: '強い',
+        cleanCup: 8,
+        sweet: 8,
+        acidity: 8,
+        mouseFeel: 8,
+        flavor: 8,
+        afterTaste: 8,
+        balance: 8,
+        overall: 8,
+        score: 85.1
+      }
+      const db = firebase.firestore()
+      const coffeeRef = db.collection('coffee')
+      coffeeRef.add(cuppingResult).then(res => {
+        console.log('success')
+        const cuppingResultsRef
+          = db.collection('users').doc(this.uid).collection('cupping_results').doc(res.id)
+        cuppingResultsRef.set({ result_id: res.id }) // カッピングリザルトをusersコレクションのサブコレクションとして保存
+      }).catch(err => {
+        console.log(err.message)
+      })
+    }
+  }
 }
 </script>
 
