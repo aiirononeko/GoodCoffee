@@ -8,7 +8,7 @@ module.exports = {
   theme: {
     screens: {
       'sm': { 'max': '767px' },
-      'md': { 'max': '1179px' },
+      'md': { 'max': '1179px', 'min': '768' },
     }
   },
   variants: {},

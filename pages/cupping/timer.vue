@@ -29,12 +29,12 @@
       </div>
       <button @click="breakDone" class="next">次に進む</button>
     </div>
-    <div class="my_container" v-if="isBreakDone">
+    <div class="container" v-if="isBreakDone">
       <h2 class="title my-10">それではテイスティングをはじめましょう</h2>
       <h2 class="title my-10">各項目を評価してください</h2>
       <div class="timer my-10">{{ time }}</div>
       <div class="cupping_items my-5">
-        <div class="flex">
+        <div class="flex custom_flex">
           <div class="cupping_item flex flex-col">
             <label for="cleanCup">クリーンカップ</label>
             <div class="inline-block relative w-64">
@@ -144,7 +144,7 @@
             </div>
           </div>
         </div>
-        <div class="flex mt-5">
+        <div class="flex mt-5 custom_flex">
           <div class="cupping_item flex flex-col">
             <label for="flavor">フレーバー</label>
             <div class="inline-block relative w-64">
@@ -255,7 +255,7 @@
           </div>
         </div>
       </div>
-      <button @click="dispatchResult" class="next mt-5">次に進む</button>
+      <button @click="dispatchResult" class="next m-5 mb-10">次に進む</button>
     </div>
   </div>
 </template>
@@ -377,6 +377,15 @@ export default {
   .title {
     font-size: 30px;
   }
+
+  .cupping_items {
+    display: flex;
+  }
+
+  .custom_flex {
+    flex-direction: column;
+    margin: 0;
+  }
 }
 
 /**
@@ -384,7 +393,19 @@ export default {
  */
 @media screen and (max-width: 767px) {
   .title {
-    font-size: 25px;
+    font-size: 20px;
+    margin: 10px auto;
+    margin-top: 30px;
+  }
+
+  .cupping_items {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .cupping_item {
+    margin: 0;
+    margin-bottom: 10px;
   }
 }
 </style>
