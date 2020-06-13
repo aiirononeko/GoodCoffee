@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <div>
-      <button @click="startCupping" class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded-l user_form_items">カッピングを始める</button>
+      <button @click="startCupping" class="shadow focus:shadow-outline focus:outline-none bg-blue-300 hover:bg-blue-500 text-gray-800 font-bold py-2 px-10 rounded-l start_button">カッピングを始める</button>
     </div>
     <div>
       <h2 class="title">{{ uid }}さんがカッピングしたコーヒー</h2>
@@ -85,5 +85,37 @@ export default {
   font-size: 30px;
   color: #35495e;
   letter-spacing: 1px;
+  margin-top: 50px;
+  margin-bottom: 30px;
+}
+
+.container > button {
+  margin-top: 30px;
+}
+
+.container > button:hover {
+  color: #3490dc;
+}
+
+/** 
+ * タブレット用ブレークポイント
+ */
+@media screen and (max-width: 1179px) {
+  .title {
+    font-size: 20px;
+  }
+}
+
+/**
+ * スマホ用ブレークポイント
+ */
+@media screen and (max-width: 767px) {
+  .title {
+    font-size: 25px;
+  }
+
+  .user_form_items {
+    width: 60%;
+  }
 }
 </style>

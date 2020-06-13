@@ -1,8 +1,9 @@
 <template>
-  <div>
-    <h2>{{ country }} {{ farmer }} {{ process }} Score: {{ score }} 
-      <nuxt-link :to="`/coffee/${id}`">詳細</nuxt-link>
-    </h2>
+  <div class="flex bg-gray-100 text-gray-800 links" @click="goMoreInfo">
+    <h2 class="flex-1 bg-gray-200">{{ country }}</h2>
+    <h2 class="flex-1 bg-gray-200">{{ farmer }}</h2>
+    <h2 class="flex-1 bg-gray-200">{{ process }}</h2>
+    <h2 class="flex-1 bg-gray-200">Score: {{ score }}</h2>
   </div>
 </template>
 
@@ -62,9 +63,21 @@ export default {
       this.overall = doc.data().overall
       this.score = doc.data().score
     })
+  },
+  methods: {
+    goMoreInfo() {
+      this.$router.push(`/coffee/${this.id}`)
+    }
   }
 }
 </script>
 
 <style scoped>
+h2 {
+  margin-bottom: 25px;
+}
+
+.links:hover {
+  color: #3490dc;
+}
 </style>
