@@ -30,6 +30,7 @@ import firebase from '~/plugins/firebase'
 export default {
   data() {
     return {
+      cupped: '',
       country: '',
       farmer: '',
       elevation: '',
@@ -37,8 +38,20 @@ export default {
       variety: '',
     }
   },
+  mounted() {
+    /**
+     * ユーザーネーム取得.
+     */
+    const usersRef = firebase.firestore().collection('users').doc(firebase.auth().currentUser.uid)
+    usersRef.get().then(doc => {
+      if (doc) {
+        this.cupped = doc.data().name
+      }
+    })
+  },
   methods: {
     dispathBeansInfo() {
+      this.$store.commit('cuppingResult/setCupped', this.cupped)
       this.$store.commit('cuppingResult/setCountry', this.country)
       this.$store.commit('cuppingResult/setFarmer', this.farmer)
       this.$store.commit('cuppingResult/setElevation', Number(this.elevation))
@@ -49,7 +62,6 @@ export default {
       const coffeeRef = db.collection('coffee')
       coffeeRef.add(this.$store.state.cuppingResult).then(res => {
         console.log('success')
-        console.log(res.id)
         const cuppingResultsRef
           = db.collection('users').doc(firebase.auth().currentUser.uid).collection('cupping_results').doc(res.id)
         cuppingResultsRef.set({ result_id: res.id }) // カッピングリザルトをusersコレクションのサブコレクションとして保存

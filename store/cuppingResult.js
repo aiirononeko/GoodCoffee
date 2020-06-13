@@ -1,4 +1,5 @@
 export const state = () => ({
+  cupped: '',
   country: '',
   farmer: '',
   elevation: 0,
@@ -20,6 +21,7 @@ export const state = () => ({
 })
 
 export const getters = {
+  copped: state => state.cupped,
   country: state => state.country,
   farmer: state => state.farmer,
   elevation: state => state.elevation,
@@ -41,6 +43,9 @@ export const getters = {
 }
 
 export const mutations = {
+  setCupped(state, payload) {
+    state.cupped = payload
+  },
   setCountry(state, payload) {
     state.country = payload
   },

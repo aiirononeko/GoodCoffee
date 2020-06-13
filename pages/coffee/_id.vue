@@ -2,6 +2,7 @@
   <div class="container">
     <div>
       <h1 class="title my-10">{{ country }} {{ farmer }} {{ process }}</h1>
+      <p class="mb-10">Cupped by {{ cupped }}</p>
     </div>
     <div class="chart">
       <Chart
@@ -18,9 +19,9 @@
     <div>
       <h2 class="title my-10">Score: {{ score }}</h2>
     </div>
-    <div>
-      <p class="mb-5">Twitterに投稿する</p>
-      <p class="mb-10">Facebookに投稿する</p>
+    <div class="flex-row mb-10">
+      <button @click="shareOntoTwitter" class="flex-1 shadow focus:shadow-outline focus:outline-none bg-blue-400 hover:bg-blue-500 text-gray-100 font-bold py-2 px-10">Twitterに投稿する</button>
+      <button @click="shareOntoFacebook" class="flex-1 shadow focus:shadow-outline focus:outline-none bg-indigo-400 hover:bg-indigo-500 text-gray-100 font-bold py-2 px-10">Facebookに投稿する</button>
     </div>
     <nuxt-link :to="`/users/${uid}`">マイページに戻る</nuxt-link>
   </div>
@@ -38,6 +39,7 @@ export default {
     return {
       uid: '',
       id: '',
+      cupped: '',
       country: '',
       farmer: '',
       elevation: 0,
@@ -55,7 +57,7 @@ export default {
       afterTaste: 0,
       balance: 0,
       overAll: 0,
-      score: 0
+      score: 0,
     }
   },
   async beforeCreate() {
@@ -64,12 +66,11 @@ export default {
       await firebase.auth().onAuthStateChanged(async user => {
         if (user) {
           this.uid = user.uid
-          // if (this.uid != this.$route.params.id) {
-          //   this.$router.push(`/users/${this.uid}`) // 自分以外のリザルトにアクセスできない
-          // }
+
           const db = firebase.firestore()
           const coffeeRef = db.collection('coffee').doc(this.id)
           await coffeeRef.get().then(doc => {
+            this.cupped = doc.data().cupped
             this.country = doc.data().country
             this.farmer = doc.data().farmer
             this.elevation = doc.data().elevation
@@ -89,12 +90,22 @@ export default {
             this.overAll = doc.data().overAll
             this.score = doc.data().score
           })
-        } else {
-          this.$router.push('/signin') // ログイン状態でなければアクセスできない
         }
       })
     })
   },
+  methods: {
+    shareOntoFacebook() {
+      const url = encodeURIComponent(location.href)
+      const fbURL = `https://www.facebook.com/sharer/sharer.php?u=${url}`
+      window.open(fbURL, '_blank')
+    },
+    shareOntoTwitter() {
+      const url = encodeURIComponent(location.href)
+      const twiURL = `https://twitter.com/intent/tweet?text=「Good Coffee」でコーヒーをカッピングしました！&url=${url}`
+      window.open(twiURL, '_blank')
+    }
+  }
 }
 </script>
 
