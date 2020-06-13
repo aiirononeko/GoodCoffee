@@ -1,7 +1,7 @@
 <template>
   <div class="container">
-    <h2 class="title">まずはローストレベルを確認しましょう</h2>
-    <div class="flex my-10 py-10 buttons">
+    <h2 class="title my-10">まずはローストレベルを確認しましょう</h2>
+    <div class="flex my-10 buttons">
       <button @click="setRoastLevelDark" class="flex-1 shadow focus:shadow-outline focus:outline-none bg-orange-900 hover:bg-orange-800 text-orange-200 font-bold py-2 px-10 buttons_item">ダーク</button>
       <button @click="setRoastLevelMedium" class="flex-1 shadow focus:shadow-outline focus:outline-none bg-yellow-700 hover:bg-yellow-600 text-yellow-300 font-bold py-2 px-10 buttons_item">ミディアム</button>
       <button @click="setRoastLevelLight" class="flex-1 shadow focus:shadow-outline focus:outline-none bg-yellow-500 hover:bg-yellow-400 text-yellow-700 font-bold py-2 px-10 buttons_item">ライト</button>
@@ -50,7 +50,7 @@ export default {
     'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
   display: block;
   font-weight: 300;
-  font-size: 40px;
+  font-size: 30px;
   color: #35495e;
   letter-spacing: 1px;
 }
