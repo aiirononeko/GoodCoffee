@@ -5,9 +5,9 @@
         さあ、カッピングをはじめよう
       </h2>
       <div class="user_form">
-        <button @click="goSignin" class="bg-gray-300 hover:bg-gray-500 text-gray-800 font-bold py-2 px-8 rounded-l user_form_items">ログイン</button>
+        <button @click="goSignin" class="shadow focus:shadow-outline focus:outline-none bg-gray-300 hover:bg-gray-500 text-gray-800 font-bold py-2 px-8 rounded-l user_form_items">ログイン</button>
         <p class="user_form_items">または、</p>
-        <button @click="goSignup" class="bg-gray-300 hover:bg-gray-500 text-gray-800 font-bold py-2 px-8 rounded-l user_form_items">アカウントを作成</button>
+        <button @click="goSignup" class="shadow focus:shadow-outline focus:outline-none bg-gray-300 hover:bg-gray-500 text-gray-800 font-bold py-2 px-8 rounded-l user_form_items">アカウントを作成</button>
       </div>
       <div class="links">
         <nuxt-link to="/">利用規約</nuxt-link>
@@ -75,7 +75,7 @@ export default Vue.extend({
 }
 
 .links > a:hover {
-  color: blue;
+  color: #3490dc;
 }
 
 /** 
