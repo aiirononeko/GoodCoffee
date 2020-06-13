@@ -18,8 +18,11 @@
         const data = {
           labels: ['CleanCup', 'Sweet', 'Acidity', 'MouseFeel', 'Flavor', 'AfterTaste', 'Balance', 'OverAll'],
           datasets: [{
-            data: [this.cleanCup, this.sweet, this.acidity, this.mouseFeel, this.flavor, this.afterTaste, this.balance, this.overAll]
-          }]
+            data: [this.cleanCup, this.sweet, this.acidity, this.mouseFeel, this.flavor, this.afterTaste, this.balance, this.overAll],
+            label: "score",
+            backgroundColor: "#FFFFF0",
+            borderColor: "#F6E05E",
+          }],
         }
         const options = {
           scale: {
@@ -30,7 +33,7 @@
               suggestedMin: 0,
               suggestedMax: 8
             }
-          }
+          },
         };
   
         this.renderChart(data, options)

@@ -1,9 +1,9 @@
 <template>
   <div class="container">
     <div>
-      <h1 class="title">{{ country }} {{ farmer }} {{ process }}</h1>
+      <h1 class="title my-10">{{ country }} {{ farmer }} {{ process }}</h1>
     </div>
-    <div>
+    <div class="chart">
       <Chart
         :cleanCup="cleanCup"
         :sweet="sweet"
@@ -16,11 +16,11 @@
       />
     </div>
     <div>
-      <h2>Score {{ score }}</h2>
+      <h2 class="title my-10">Score: {{ score }}</h2>
     </div>
     <div>
-      <p>Twitterに投稿する</p>
-      <p>Facebookに投稿する</p>
+      <p class="mb-5">Twitterに投稿する</p>
+      <p class="mb-10">Facebookに投稿する</p>
     </div>
     <nuxt-link :to="`/users/${uid}`">マイページに戻る</nuxt-link>
   </div>
@@ -117,5 +117,22 @@ export default {
   font-size: 30px;
   color: #35495e;
   letter-spacing: 1px;
+}
+
+a:hover {
+  color: #3490dc;
+}
+
+/**
+ * スマホ用ブレークポイント
+ */
+@media screen and (max-width: 767px) {
+  .title {
+    font-size: 25px;
+  }
+
+  .user_form_items {
+    width: 60%;
+  }
 }
 </style>
