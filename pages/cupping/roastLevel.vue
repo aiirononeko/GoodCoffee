@@ -1,10 +1,10 @@
 <template>
   <div class="container">
     <h2 class="title">まずはローストレベルを確認しましょう</h2>
-    <div class="buttons">
-      <button @click="setRoastLevelDark" class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded-l buttons_item">ダーク</button>
-      <button @click="setRoastLevelMedium" class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded-l buttons_item">ミディアム</button>
-      <button @click="setRoastLevelLight" class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded-l buttons_item">ライト</button>
+    <div class="flex my-10 py-10 buttons">
+      <button @click="setRoastLevelDark" class="flex-1 shadow focus:shadow-outline focus:outline-none bg-orange-900 hover:bg-orange-800 text-orange-200 font-bold py-2 px-10 buttons_item">ダーク</button>
+      <button @click="setRoastLevelMedium" class="flex-1 shadow focus:shadow-outline focus:outline-none bg-yellow-700 hover:bg-yellow-600 text-yellow-300 font-bold py-2 px-10 buttons_item">ミディアム</button>
+      <button @click="setRoastLevelLight" class="flex-1 shadow focus:shadow-outline focus:outline-none bg-yellow-500 hover:bg-yellow-400 text-yellow-700 font-bold py-2 px-10 buttons_item">ライト</button>
     </div>
     <nuxt-link to="/cupping/dryAroma">次に進む</nuxt-link>
   </div>
@@ -50,17 +50,38 @@ export default {
     'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
   display: block;
   font-weight: 300;
-  font-size: 30px;
+  font-size: 40px;
   color: #35495e;
   letter-spacing: 1px;
 }
 
 .buttons {
-  display: flex;
-  flex-direction: row;
+  width: 60%;
 }
 
-.buttons_item {
-  margin-left: 10px;
+/** 
+ * タブレット用ブレークポイント
+ */
+@media screen and (max-width: 1179px) {
+  .title {
+    font-size: 30px;
+  }
+
+  .buttons {
+    width: 70%;
+  }
+}
+
+/**
+ * スマホ用ブレークポイント
+ */
+@media screen and (max-width: 767px) {
+  .title {
+    font-size: 20px;
+  }
+
+  .buttons {
+    width: 100%;
+  }
 }
 </style>
