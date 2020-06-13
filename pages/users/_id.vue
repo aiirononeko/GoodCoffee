@@ -1,10 +1,10 @@
 <template>
   <div class="container">
     <div>
-      <button @click="startCupping" class="shadow focus:shadow-outline focus:outline-none bg-blue-300 hover:bg-blue-500 text-gray-800 font-bold py-2 px-10 rounded-l start_button">カッピングを始める</button>
+      <button @click="startCupping" class="shadow focus:shadow-outline focus:outline-none bg-blue-300 hover:bg-blue-500 text-gray-800 font-bold py-2 px-10 rounded-l start_button mt-10">カッピングを始める</button>
     </div>
     <div>
-      <h2 class="title">{{ uid }}さんがカッピングしたコーヒー</h2>
+      <h2 class="title">{{ username }}さんがカッピングしたコーヒー</h2>
       <div v-for="(result, i) in cuppingResult" :key="i">
         <List :result_id="result" />
       </div>
@@ -24,6 +24,7 @@ export default {
   data() {
     return {
       uid: '',
+      username: '',
       cuppingResult: [],
     }
   },
@@ -37,6 +38,15 @@ export default {
         if (this.uid != this.$route.params.id) {
           this.$router.push(`/users/${this.uid}`) // 自分以外のマイページにアクセスできない
         }
+        /**
+         * ユーザーネーム取得.
+         */
+        const usersRef = firebase.firestore().collection('users').doc(this.uid)
+        usersRef.get().then(doc => {
+          if (doc) {
+            this.username = doc.data().name
+          }
+        })
         /**
          * カッピングリザルト取得.
          */

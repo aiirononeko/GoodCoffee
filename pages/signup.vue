@@ -7,6 +7,16 @@
     <form class="w-full max-w-sm my-8">
       <div class="md:flex md:items-center mb-6">
         <div class="md:w-1/3">
+          <label class="block text-gray-500 font-bold md:text-right mb-1 md:mb-0 pr-4" for="name">
+            Name
+          </label>
+        </div>
+        <div class="md:w-2/3">
+          <input v-model="name" placeholder="Taro" class="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500" id="name" type="text">
+        </div>
+      </div>
+      <div class="md:flex md:items-center mb-6">
+        <div class="md:w-1/3">
           <label class="block text-gray-500 font-bold md:text-right mb-1 md:mb-0 pr-4" for="email">
             Email
           </label>
@@ -44,6 +54,7 @@ import firebase from '~/plugins/firebase'
 export default {
   data() {
     return {
+      name: '',
       email: '',
       password: '',
     }
@@ -56,14 +67,16 @@ export default {
     })
   },
   methods: {
-    signUpWithEmail() {
-      firebase.auth().createUserWithEmailAndPassword(this.email, this.password).then(result => {
+    async signUpWithEmail() {
+      await firebase.auth().createUserWithEmailAndPassword(this.email, this.password).then(async result => {
         const userInfo = {
           uid: result.user.uid,
+          name: this.name
         }
+        console.log(userInfo)
         const db = firebase.firestore()
         const usersRef = db.collection('users').doc(result.user.uid)
-        usersRef.set(userInfo).then(res => {
+        await usersRef.set(userInfo).then(res => {
           this.$router.push(`/users/${result.user.uid}`)
         }).catch(err => {
           console.log(err.message)
