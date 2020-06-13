@@ -1,73 +1,261 @@
 <template>
   <div class="container">
     <div v-if="Number(this.time[1]) < 1">
-      <h2 class="title">沸騰したお湯を150g注ぎます</h2>
-      <h2 class="title">タイマーをスタートしましょう</h2>
-      <div>{{ time }}</div>
-      <button @click="timerStart" v-if="!isRunning" class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded-l buttons_item">スタート</button>
-      <p>タイマーが1分を経過すると次のアクションがあります</p>
+      <h2 class="title my-10">沸騰したお湯を150g注ぎます</h2>
+      <h2 class="title my-10">タイマーをスタートしましょう</h2>
+      <div class="timer my-10">{{ time }}</div>
+      <button @click="timerStart" v-if="!isRunning" class="shadow focus:shadow-outline focus:outline-none bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded-l start_button">スタート</button>
+      <p class="my-10 text-green-600">タイマーが1分を経過すると次のアクションがあります</p>
     </div>
     <div v-if="Number(this.time[1]) >= 1 && Number(this.time[1]) < 4">
-      <h2 class="title">1分経過しました</h2>
-      <h2 class="title">クラストのアロマはいかがですか？</h2>
-      <div>{{ time }}</div>
-      <div class="buttons">
-        <button @click="setCrustForce" class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded-l buttons_item">強い</button>
-        <button @click="setCrustMedium" class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded-l buttons_item">普通</button>
-        <button @click="setCrustLight" class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded-l buttons_item">弱い</button>
+      <h2 class="title my-10">1分経過しました</h2>
+      <h2 class="title my-10">クラストのアロマはいかがですか？</h2>
+      <div class="timer my-10">{{ time }}</div>
+      <div class="flex buttons my-10">
+        <button @click="setCrustForce" class="flex-1 shadow focus:shadow-outline focus:outline-none bg-pink-200 hover:bg-pink-300 text-gray-800 font-bold py-2 px-4 rounded-l buttons_item">強い</button>
+        <button @click="setCrustMedium" class="flex-1 shadow focus:shadow-outline focus:outline-none bg-purple-200 hover:bg-purple-300 text-gray-800 font-bold py-2 px-4 rounded-l buttons_item">普通</button>
+        <button @click="setCrustLight" class="flex-1 shadow focus:shadow-outline focus:outline-none bg-yellow-200 hover:bg-yellow-300 text-gray-800 font-bold py-2 px-4 rounded-l buttons_item">弱い</button>
       </div>
-      <p>タイマーが4分を経過すると次のアクションがあります</p>
+      <p class="my-10 text-green-600">タイマーが4分を経過すると次のアクションがあります</p>
     </div>
     <div v-if="Number(this.time[1]) >= 4 && !isBreakDone">
-      <h2 class="title">4分経過しました</h2>
-      <h2 class="title">ブレイクのアロマはいかがですか？</h2>
-      <div>{{ time }}</div>
-      <div class="buttons">
-        <button @click="setBreakForce" class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded-l buttons_item">強い</button>
-        <button @click="setBreakMedium" class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded-l buttons_item">普通</button>
-        <button @click="setBreakLight" class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded-l buttons_item">弱い</button>
+      <h2 class="title my-10">4分経過しました</h2>
+      <h2 class="title my-10">ブレイクのアロマはいかがですか？</h2>
+      <div class="timer my-10">{{ time }}</div>
+      <div class="flex buttons my-10">
+        <button @click="setBreakForce" class="flex-1 shadow focus:shadow-outline focus:outline-none bg-pink-200 hover:bg-pink-300 text-gray-800 font-bold py-2 px-4 rounded-l buttons_item">強い</button>
+        <button @click="setBreakMedium" class="flex-1 shadow focus:shadow-outline focus:outline-none bg-purple-200 hover:bg-purple-300 text-gray-800 font-bold py-2 px-4 rounded-l buttons_item">普通</button>
+        <button @click="setBreakLight" class="flex-1 shadow focus:shadow-outline focus:outline-none bg-yellow-200 hover:bg-yellow-300 text-gray-800 font-bold py-2 px-4 rounded-l buttons_item">弱い</button>
       </div>
-      <button @click="breakDone">次に進む</button>
+      <button @click="breakDone" class="next">次に進む</button>
     </div>
-    <div v-if="isBreakDone">
-      <h2 class="title">それではテイスティングをはじめましょう</h2>
-      <h2 class="title">各項目を評価してください</h2>
-      <div>{{ time }}</div>
-      <div class="cupping_items">
-        <div class="cupping_item">
-          <label for="cleanCup">クリーンカップ</label>
-          <input type="number" v-model="cleanCup">
+    <div class="my_container" v-if="isBreakDone">
+      <h2 class="title my-10">それではテイスティングをはじめましょう</h2>
+      <h2 class="title my-10">各項目を評価してください</h2>
+      <div class="timer my-10">{{ time }}</div>
+      <div class="cupping_items my-5">
+        <div class="flex">
+          <div class="cupping_item flex flex-col">
+            <label for="cleanCup">クリーンカップ</label>
+            <div class="inline-block relative w-64">
+              <select v-model="cleanCup" class="block appearance-none w-full bg-white border border-gray-400 hover:border-gray-500 px-4 py-2 pr-8 rounded shadow leading-tight focus:outline-none focus:shadow-outline">
+                <option>0</option>
+                <option>0.5</option>
+                <option>1</option>
+                <option>1.5</option>
+                <option>2</option>
+                <option>2.5</option>
+                <option>3</option>
+                <option>3.5</option>
+                <option>4</option>
+                <option>4.5</option>
+                <option>5</option>
+                <option>5.5</option>
+                <option>6</option>
+                <option>6.5</option>
+                <option>7</option>
+                <option>7.5</option>
+                <option>8</option>
+              </select>
+              <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
+                <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/></svg>
+              </div>
+            </div>
+          </div>
+          <div class="cupping_item flex flex-col">
+            <label for="sweet">甘さ</label>
+            <div class="inline-block relative w-64">
+              <select v-model="sweet" class="block appearance-none w-full bg-white border border-gray-400 hover:border-gray-500 px-4 py-2 pr-8 rounded shadow leading-tight focus:outline-none focus:shadow-outline">
+                <option>0</option>
+                <option>0.5</option>
+                <option>1</option>
+                <option>1.5</option>
+                <option>2</option>
+                <option>2.5</option>
+                <option>3</option>
+                <option>3.5</option>
+                <option>4</option>
+                <option>4.5</option>
+                <option>5</option>
+                <option>5.5</option>
+                <option>6</option>
+                <option>6.5</option>
+                <option>7</option>
+                <option>7.5</option>
+                <option>8</option>
+              </select>
+              <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
+                <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/></svg>
+              </div>
+            </div>
+          </div>
+          <div class="cupping_item flex flex-col">
+            <label for="acidity">酸</label>
+            <div class="inline-block relative w-64">
+              <select v-model="acidity" class="block appearance-none w-full bg-white border border-gray-400 hover:border-gray-500 px-4 py-2 pr-8 rounded shadow leading-tight focus:outline-none focus:shadow-outline">
+                <option>0</option>
+                <option>0.5</option>
+                <option>1</option>
+                <option>1.5</option>
+                <option>2</option>
+                <option>2.5</option>
+                <option>3</option>
+                <option>3.5</option>
+                <option>4</option>
+                <option>4.5</option>
+                <option>5</option>
+                <option>5.5</option>
+                <option>6</option>
+                <option>6.5</option>
+                <option>7</option>
+                <option>7.5</option>
+                <option>8</option>
+              </select>
+              <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
+                <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/></svg>
+              </div>
+            </div>
+          </div>
+          <div class="cupping_item flex flex-col">
+            <label for="mouseFeel">触感</label>
+            <div class="inline-block relative w-64">
+              <select v-model="mouseFeel" class="block appearance-none w-full bg-white border border-gray-400 hover:border-gray-500 px-4 py-2 pr-8 rounded shadow leading-tight focus:outline-none focus:shadow-outline">
+                <option>0</option>
+                <option>0.5</option>
+                <option>1</option>
+                <option>1.5</option>
+                <option>2</option>
+                <option>2.5</option>
+                <option>3</option>
+                <option>3.5</option>
+                <option>4</option>
+                <option>4.5</option>
+                <option>5</option>
+                <option>5.5</option>
+                <option>6</option>
+                <option>6.5</option>
+                <option>7</option>
+                <option>7.5</option>
+                <option>8</option>
+              </select>
+              <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
+                <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/></svg>
+              </div>
+            </div>
+          </div>
         </div>
-        <div class="cupping_item">
-          <label for="sweet">甘さ</label>
-          <input type="number" v-model="sweet">
-        </div>
-        <div class="cupping_item">
-          <label for="acidity">酸</label>
-          <input type="number" v-model="acidity">
-        </div>
-        <div class="cupping_item">
-          <label for="mouseFeel">触感</label>
-          <input type="number" v-model="mouseFeel">
-        </div>
-        <div class="cupping_item">
-          <label for="flavor">フレーバー</label>
-          <input type="number" v-model="flavor">
-        </div>
-        <div class="cupping_item">
-          <label for="afterTaste">後味</label>
-          <input type="number" v-model="afterTaste">
-        </div>
-        <div class="cupping_item">
-          <label for="balance">バランス</label>
-          <input type="number" v-model="balance">
-        </div>
-        <div class="cupping_item">
-          <label for="overall">オーバーオール</label>
-          <input type="number" v-model="overAll">
+        <div class="flex mt-5">
+          <div class="cupping_item flex flex-col">
+            <label for="flavor">フレーバー</label>
+            <div class="inline-block relative w-64">
+              <select v-model="flavor" class="block appearance-none w-full bg-white border border-gray-400 hover:border-gray-500 px-4 py-2 pr-8 rounded shadow leading-tight focus:outline-none focus:shadow-outline">
+                <option>0</option>
+                <option>0.5</option>
+                <option>1</option>
+                <option>1.5</option>
+                <option>2</option>
+                <option>2.5</option>
+                <option>3</option>
+                <option>3.5</option>
+                <option>4</option>
+                <option>4.5</option>
+                <option>5</option>
+                <option>5.5</option>
+                <option>6</option>
+                <option>6.5</option>
+                <option>7</option>
+                <option>7.5</option>
+                <option>8</option>
+              </select>
+              <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
+                <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/></svg>
+              </div>
+            </div>
+          </div>
+          <div class="cupping_item flex flex-col">
+            <label for="afterTaste">後味</label>
+            <div class="inline-block relative w-64">
+              <select v-model="afterTaste" class="block appearance-none w-full bg-white border border-gray-400 hover:border-gray-500 px-4 py-2 pr-8 rounded shadow leading-tight focus:outline-none focus:shadow-outline">
+                <option>0</option>
+                <option>0.5</option>
+                <option>1</option>
+                <option>1.5</option>
+                <option>2</option>
+                <option>2.5</option>
+                <option>3</option>
+                <option>3.5</option>
+                <option>4</option>
+                <option>4.5</option>
+                <option>5</option>
+                <option>5.5</option>
+                <option>6</option>
+                <option>6.5</option>
+                <option>7</option>
+                <option>7.5</option>
+                <option>8</option>
+              </select>
+              <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
+                <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/></svg>
+              </div>
+            </div>
+          </div>
+          <div class="cupping_item flex flex-col">
+            <label for="balance">バランス</label>
+            <div class="inline-block relative w-64">
+              <select v-model="balance" class="block appearance-none w-full bg-white border border-gray-400 hover:border-gray-500 px-4 py-2 pr-8 rounded shadow leading-tight focus:outline-none focus:shadow-outline">
+                <option>0</option>
+                <option>0.5</option>
+                <option>1</option>
+                <option>1.5</option>
+                <option>2</option>
+                <option>2.5</option>
+                <option>3</option>
+                <option>3.5</option>
+                <option>4</option>
+                <option>4.5</option>
+                <option>5</option>
+                <option>5.5</option>
+                <option>6</option>
+                <option>6.5</option>
+                <option>7</option>
+                <option>7.5</option>
+                <option>8</option>
+              </select>
+              <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
+                <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/></svg>
+              </div>
+            </div>
+          </div>
+          <div class="cupping_item flex flex-col">
+            <label for="overall">オーバーオール</label>
+            <div class="inline-block relative w-64">
+              <select v-model="overAll" class="block appearance-none w-full bg-white border border-gray-400 hover:border-gray-500 px-4 py-2 pr-8 rounded shadow leading-tight focus:outline-none focus:shadow-outline">
+                <option>0</option>
+                <option>0.5</option>
+                <option>1</option>
+                <option>1.5</option>
+                <option>2</option>
+                <option>2.5</option>
+                <option>3</option>
+                <option>3.5</option>
+                <option>4</option>
+                <option>4.5</option>
+                <option>5</option>
+                <option>5.5</option>
+                <option>6</option>
+                <option>6.5</option>
+                <option>7</option>
+                <option>7.5</option>
+                <option>8</option>
+              </select>
+              <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
+                <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/></svg>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
-      <button @click="dispatchResult">次に進む</button>
+      <button @click="dispatchResult" class="next mt-5">次に進む</button>
     </div>
   </div>
 </template>
@@ -79,20 +267,20 @@ const timer = new Timer();
 export default {
   data() {
     return {
-      time: '00:00',
+      time: '04:00',
       isRunning: false,
       isBreakDone: false,
       crustAroma: '',
       breakAroma: '',
-      cleanCup: 0,
-      sweet: 0,
-      acidity: 0,
-      mouseFeel: 0,
-      flavor: 0,
-      afterTaste: 0,
-      balance: 0,
-      overAll: 0,
-      score: 0
+      cleanCup: '',
+      sweet: '',
+      acidity: '',
+      mouseFeel: '',
+      flavor: '',
+      afterTaste: '',
+      balance: '',
+      overAll: '',
+      score: '',
     }
   },
   methods: {
@@ -131,14 +319,14 @@ export default {
       this.$store.commit('cuppingResult/setBreakAroma', this.breakAroma)
     },
     dispatchResult() {
-      this.$store.commit('cuppingResult/setCleanCup', this.cleanCup)
-      this.$store.commit('cuppingResult/setSweet', this.sweet)
-      this.$store.commit('cuppingResult/setAcidity', this.acidity)
-      this.$store.commit('cuppingResult/setMouseFeel', this.mouseFeel)
-      this.$store.commit('cuppingResult/setFlavor', this.flavor)
-      this.$store.commit('cuppingResult/setAfterTaste', this.afterTaste)
-      this.$store.commit('cuppingResult/setBalance', this.balance)
-      this.$store.commit('cuppingResult/setOverAll', this.overAll)
+      this.$store.commit('cuppingResult/setCleanCup', Number(this.cleanCup))
+      this.$store.commit('cuppingResult/setSweet', Number(this.sweet))
+      this.$store.commit('cuppingResult/setAcidity', Number(this.acidity))
+      this.$store.commit('cuppingResult/setMouseFeel', Number(this.mouseFeel))
+      this.$store.commit('cuppingResult/setFlavor', Number(this.flavor))
+      this.$store.commit('cuppingResult/setAfterTaste', Number(this.afterTaste))
+      this.$store.commit('cuppingResult/setBalance', Number(this.balance))
+      this.$store.commit('cuppingResult/setOverAll', Number(this.overAll))
 
       this.score = Number(this.cleanCup) + Number(this.sweet) + Number(this.acidity) + Number(this.mouseFeel) + Number(this.flavor) + Number(this.afterTaste) + Number(this.balance) + Number(this.overAll) + 36
       this.$store.commit('cuppingResult/setScore', this.score)
@@ -170,8 +358,33 @@ export default {
   letter-spacing: 1px;
 }
 
-.cupping_item > input {
-  margin-top: 10px;
-  border: 1px #35495e solid;
+.start_button {
+  width: 60%;
+}
+
+.timer {
+  font-size: 50px;
+}
+
+.next:hover {
+  color: #3490dc;
+}
+
+/** 
+ * タブレット用ブレークポイント
+ */
+@media screen and (max-width: 1179px) {
+  .title {
+    font-size: 30px;
+  }
+}
+
+/**
+ * スマホ用ブレークポイント
+ */
+@media screen and (max-width: 767px) {
+  .title {
+    font-size: 25px;
+  }
 }
 </style>
