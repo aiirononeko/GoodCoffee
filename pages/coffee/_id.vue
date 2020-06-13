@@ -19,11 +19,13 @@
     <div>
       <h2 class="title my-10">Score: {{ score }}</h2>
     </div>
-    <div class="flex-row mb-10">
-      <button @click="shareOntoTwitter" class="flex-1 shadow focus:shadow-outline focus:outline-none bg-blue-400 hover:bg-blue-500 text-gray-100 font-bold py-2 px-10">Twitterに投稿する</button>
-      <button @click="shareOntoFacebook" class="flex-1 shadow focus:shadow-outline focus:outline-none bg-indigo-400 hover:bg-indigo-500 text-gray-100 font-bold py-2 px-10">Facebookに投稿する</button>
+    <div v-if="uid === currentUser">
+      <div class="flex-row mb-10">
+        <button @click="shareOntoTwitter" class="flex-1 shadow focus:shadow-outline focus:outline-none bg-blue-400 hover:bg-blue-500 text-gray-100 font-bold py-2 px-10">Twitterに投稿する</button>
+        <button @click="shareOntoFacebook" class="flex-1 shadow focus:shadow-outline focus:outline-none bg-indigo-400 hover:bg-indigo-500 text-gray-100 font-bold py-2 px-10">Facebookに投稿する</button>
+      </div>
+      <nuxt-link :to="`/users/${uid}`">マイページに戻る</nuxt-link>
     </div>
-    <nuxt-link :to="`/users/${uid}`">マイページに戻る</nuxt-link>
   </div>
 </template>
 
@@ -37,8 +39,9 @@ export default {
   },
   data() {
     return {
-      uid: '',
-      id: '',
+      uid: '', // カッピングしたユーザー
+      currentUser: '', // ログインしているユーザー
+      id: '', // coffeeコレクションのドキュメントID
       cupped: '',
       country: '',
       farmer: '',
@@ -63,36 +66,38 @@ export default {
   async beforeCreate() {
     this.$nextTick(async () => {
       this.id = this.$route.params.id
-      await firebase.auth().onAuthStateChanged(async user => {
-        if (user) {
-          this.uid = user.uid
 
-          const db = firebase.firestore()
-          const coffeeRef = db.collection('coffee').doc(this.id)
-          await coffeeRef.get().then(doc => {
-            this.cupped = doc.data().cupped
-            this.country = doc.data().country
-            this.farmer = doc.data().farmer
-            this.elevation = doc.data().elevation
-            this.process = doc.data().process
-            this.variety = doc.data().variety
-            this.roastLeval = doc.data().roastLeval
-            this.dryAroma = doc.data().dryAroma
-            this.crustAroma = doc.data().crustAroma
-            this.breakAroma = doc.data().breakAroma
-            this.cleanCup = doc.data().cleanCup
-            this.sweet = doc.data().sweet
-            this.acidity = doc.data().acidity
-            this.mouseFeel = doc.data().mouseFeel
-            this.flavor = doc.data().flavor
-            this.afterTaste = doc.data().afterTaste
-            this.balance = doc.data().balance
-            this.overAll = doc.data().overAll
-            this.score = doc.data().score
-          })
-        }
+      await firebase.auth().onAuthStateChanged(user => {
+        if (user) { this.uid = user.uid }
+      })
+
+      const db = firebase.firestore()
+      const coffeeRef = await db.collection('coffee').doc(this.id)
+      await coffeeRef.get().then(doc => {
+        this.cupped = doc.data().cupped
+        this.country = doc.data().country
+        this.farmer = doc.data().farmer
+        this.elevation = doc.data().elevation
+        this.process = doc.data().process
+        this.variety = doc.data().variety
+        this.roastLeval = doc.data().roastLeval
+        this.dryAroma = doc.data().dryAroma
+        this.crustAroma = doc.data().crustAroma
+        this.breakAroma = doc.data().breakAroma
+        this.cleanCup = doc.data().cleanCup
+        this.sweet = doc.data().sweet
+        this.acidity = doc.data().acidity
+        this.mouseFeel = doc.data().mouseFeel
+        this.flavor = doc.data().flavor
+        this.afterTaste = doc.data().afterTaste
+        this.balance = doc.data().balance
+        this.overAll = doc.data().overAll
+        this.score = doc.data().score
       })
     })
+  },
+  mounted() {
+    this.currentUser = firebase.auth().currentUser.uid
   },
   methods: {
     shareOntoFacebook() {
