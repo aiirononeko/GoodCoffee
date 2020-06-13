@@ -2,9 +2,9 @@
   <div class="container">
     <h2 class="title my-10">まずはローストレベルを確認しましょう</h2>
     <div class="flex my-10 buttons">
-      <button @click="setRoastLevelDark" class="flex-1 shadow focus:shadow-outline focus:outline-none bg-orange-900 hover:bg-orange-800 text-orange-200 font-bold py-2 px-10 buttons_item">ダーク</button>
-      <button @click="setRoastLevelMedium" class="flex-1 shadow focus:shadow-outline focus:outline-none bg-yellow-700 hover:bg-yellow-600 text-yellow-300 font-bold py-2 px-10 buttons_item">ミディアム</button>
-      <button @click="setRoastLevelLight" class="flex-1 shadow focus:shadow-outline focus:outline-none bg-yellow-500 hover:bg-yellow-400 text-yellow-700 font-bold py-2 px-10 buttons_item">ライト</button>
+      <button @click="setRoastLevelDark" class="flex-1 shadow focus:shadow-outline focus:outline-none bg-orange-800 hover:bg-orange-900 text-orange-100 font-bold py-2 px-10 buttons_item">ダーク</button>
+      <button @click="setRoastLevelMedium" class="flex-1 shadow focus:shadow-outline focus:outline-none bg-yellow-600 hover:bg-yellow-700 text-yellow-300 font-bold py-2 px-10 buttons_item">ミディアム</button>
+      <button @click="setRoastLevelLight" class="flex-1 shadow focus:shadow-outline focus:outline-none bg-yellow-400 hover:bg-yellow-500 text-black-100 font-bold py-2 px-10 buttons_item">ライト</button>
     </div>
     <nuxt-link to="/cupping/dryAroma">次に進む</nuxt-link>
   </div>
