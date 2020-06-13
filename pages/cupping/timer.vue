@@ -1,13 +1,13 @@
 <template>
   <div class="container">
-    <div v-if="Number(this.time[1]) < 1">
+    <div class="container" v-if="Number(this.time[1]) < 1">
       <h2 class="title my-10">沸騰したお湯を150g注ぎます</h2>
       <h2 class="title my-10">タイマーをスタートしましょう</h2>
       <div class="timer my-10">{{ time }}</div>
       <button @click="timerStart" v-if="!isRunning" class="shadow focus:shadow-outline focus:outline-none bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded-l start_button">スタート</button>
       <p class="my-10 text-green-600">タイマーが1分を経過すると次のアクションがあります</p>
     </div>
-    <div v-if="Number(this.time[1]) >= 1 && Number(this.time[1]) < 4">
+    <div class="containers" v-if="Number(this.time[1]) >= 1 && Number(this.time[1]) < 4">
       <h2 class="title my-10">1分経過しました</h2>
       <h2 class="title my-10">クラストのアロマはいかがですか？</h2>
       <div class="timer my-10">{{ time }}</div>
@@ -267,7 +267,7 @@ const timer = new Timer();
 export default {
   data() {
     return {
-      time: '04:00',
+      time: '00:00',
       isRunning: false,
       isBreakDone: false,
       crustAroma: '',
