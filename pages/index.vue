@@ -5,9 +5,9 @@
         さあ、カッピングをはじめよう
       </h2>
       <div class="user_form">
-        <button @click="goSignin" class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded-l user_form_items">ログイン</button>
+        <button @click="goSignin" class="bg-gray-300 hover:bg-gray-500 text-gray-800 font-bold py-2 px-8 rounded-l user_form_items">ログイン</button>
         <p class="user_form_items">または、</p>
-        <button @click="goSignup" class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded-l user_form_items">アカウントを作成</button>
+        <button @click="goSignup" class="bg-gray-300 hover:bg-gray-500 text-gray-800 font-bold py-2 px-8 rounded-l user_form_items">アカウントを作成</button>
       </div>
       <div class="links">
         <nuxt-link to="/">利用規約</nuxt-link>
@@ -57,8 +57,17 @@ export default Vue.extend({
   margin-bottom: 20px;
 }
 
+.user_form > p {
+  margin: 0 auto;
+}
+
+.user_form > button {
+  margin-bottom: 20px;
+}
+
 .user_form_items {
   margin-top: 20px;
+  width: 20%;
 }
 
 .links {
@@ -67,5 +76,31 @@ export default Vue.extend({
 
 .links > a:hover {
   color: blue;
+}
+
+/** 
+ * タブレット用ブレークポイント
+ */
+@media screen and (max-width: 1179px) {
+  .title {
+    font-size: 50px;
+  }
+
+  .user_form_items {
+    width: 30%;
+  }
+}
+
+/**
+ * スマホ用ブレークポイント
+ */
+@media screen and (max-width: 767px) {
+  .title {
+    font-size: 25px;
+  }
+
+  .user_form_items {
+    width: 60%;
+  }
 }
 </style>
