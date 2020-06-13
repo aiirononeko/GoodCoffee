@@ -59,6 +59,10 @@ export default {
   width: 60%;
 }
 
+a:hover {
+  color: #3490dc;
+}
+
 /** 
  * タブレット用ブレークポイント
  */
