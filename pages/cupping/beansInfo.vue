@@ -88,4 +88,17 @@ export default {
   margin-top: 10px;
   border: 1px #35495e solid;
 }
+
+/**
+ * スマホ用ブレークポイント
+ */
+@media screen and (max-width: 767px) {
+  .title {
+    font-size: 25px;
+  }
+
+  .user_form_items {
+    width: 60%;
+  }
+}
 </style>
