@@ -1,29 +1,26 @@
 <template>
   <div class="container">
-    <h2 class="title">最後に、カッピングした豆の情報を教えてください</h2>
+    <h2 class="title my-10">最後に、カッピングした豆の情報を教えてください</h2>
     <div class="beans_infomations">
-      <div class="beans_information">
-        <label for="country">生産国</label>
-        <input type="text" v-model="country">
-      </div>
-      <div class="beans_information">
-        <label for="farmer">農園・生産者</label>
-        <input type="text" v-model="farmer">
-      </div>
-      <div class="beans_information">
-        <label for="process">プロセス</label>
-        <input type="text" v-model="process">
-      </div>
-      <div class="beans_information">
-        <label for="elevation">標高</label>
-        <input type="number" v-model="elevation">
-      </div>
-      <div class="beans_information">
-        <label for="variety">品種</label>
-        <input type="text" v-model="variety">
-      </div>
+      <form class="w-full max-w-sm mb-10">
+        <div class="flex items-center border-b border-b-2 border-teal-500 py-2">
+          <input v-model="country" class="appearance-none bg-transparent border-none w-full text-gray-700 mr-3 py-1 px-2 leading-tight focus:outline-none" type="text" placeholder="生産国">
+        </div>
+        <div class="flex items-center border-b border-b-2 border-teal-500 py-2">
+          <input v-model="farmer" class="appearance-none bg-transparent border-none w-full text-gray-700 mr-3 py-1 px-2 leading-tight focus:outline-none" type="text" placeholder="農園・生産者">
+        </div>
+        <div class="flex items-center border-b border-b-2 border-teal-500 py-2">
+          <input v-model="process" class="appearance-none bg-transparent border-none w-full text-gray-700 mr-3 py-1 px-2 leading-tight focus:outline-none" type="text" placeholder="プロセス">
+        </div>
+        <div class="flex items-center border-b border-b-2 border-teal-500 py-2">
+          <input v-model="elevation" class="appearance-none bg-transparent border-none w-full text-gray-700 mr-3 py-1 px-2 leading-tight focus:outline-none" type="number" placeholder="標高">
+        </div>
+        <div class="flex items-center border-b border-b-2 border-teal-500 py-2">
+          <input v-model="variety" class="appearance-none bg-transparent border-none w-full text-gray-700 mr-3 py-1 px-2 leading-tight focus:outline-none" type="text" placeholder="品種">
+        </div>
+      </form>
     </div>
-    <button @click="dispathBeansInfo">カッピングを終了する</button>
+    <button @click="dispathBeansInfo" class="shadow focus:shadow-outline focus:outline-none bg-blue-300 hover:bg-blue-500 text-gray-800 font-bold py-2 px-10 rounded-l start_button mt-5">カッピングを終了する</button>
   </div>
 </template>
 
@@ -35,7 +32,7 @@ export default {
     return {
       country: '',
       farmer: '',
-      elevation: 0,
+      elevation: '',
       process: '',
       variety: '',
     }
@@ -44,7 +41,7 @@ export default {
     dispathBeansInfo() {
       this.$store.commit('cuppingResult/setCountry', this.country)
       this.$store.commit('cuppingResult/setFarmer', this.farmer)
-      this.$store.commit('cuppingResult/setElevation', this.elevation)
+      this.$store.commit('cuppingResult/setElevation', Number(this.elevation))
       this.$store.commit('cuppingResult/setProcess', this.process)
       this.$store.commit('cuppingResult/setVariety', this.variety)
 
