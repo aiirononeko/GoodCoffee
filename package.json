@@ -17,7 +17,8 @@
     "easytimer.js": "^4.1.1",
     "firebase": "^7.15.0",
     "nuxt": "^2.0.0",
-    "vue-chartjs": "^3.5.0"
+    "vue-chartjs": "^3.5.0",
+    "vuelidate": "^0.7.5"
   },
   "devDependencies": {
     "@nuxt/typescript-build": "^0.6.0",

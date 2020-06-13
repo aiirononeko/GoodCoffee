@@ -12,7 +12,7 @@
           </label>
         </div>
         <div class="md:w-2/3">
-          <input v-model="name" placeholder="Taro" class="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500" id="name" type="text">
+          <input v-model="$v.name.$model" placeholder="Taro" class="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500" id="name" type="text">
         </div>
       </div>
       <div class="md:flex md:items-center mb-6">
@@ -22,7 +22,7 @@
           </label>
         </div>
         <div class="md:w-2/3">
-          <input v-model="email" placeholder="taro@example.com" class="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500" id="email" type="text">
+          <input v-model="$v.email.$model" placeholder="taro@example.com" class="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500" id="email" type="text">
         </div>
       </div>
       <div class="md:flex md:items-center mb-6">
@@ -32,11 +32,14 @@
           </label>
         </div>
         <div class="md:w-2/3">
-          <input v-model="password" class="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500" id="inline-username" type="password" placeholder="******************">
+          <input v-model="$v.password.$model" class="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500" id="inline-username" type="password" placeholder="******************">
         </div>
       </div>
       <div class="my-8">
         <div>
+          <ul v-if="errors.length !== 0" class="mb-8">
+            <li v-for="(err, i) in errors" :key="i" class="text-red-600">{{ err }}</li>
+          </ul>
           <button @click="signUpWithEmail" class="shadow bg-purple-500 hover:bg-purple-400 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded" type="button">
             アカウントを作成する
           </button>
@@ -50,6 +53,7 @@
 
 <script>
 import firebase from '~/plugins/firebase'
+import { required, email, maxLength } from 'vuelidate/lib/validators'
 
 export default {
   data() {
@@ -57,6 +61,20 @@ export default {
       name: '',
       email: '',
       password: '',
+      errors: []
+    }
+  },
+  validations: {
+    name: {
+      required,
+      maxLength: maxLength(30)
+    },
+    email: {
+      required,
+      email
+    },
+    password: {
+      required
     }
   },
   beforeMount() {
@@ -68,12 +86,21 @@ export default {
   },
   methods: {
     async signUpWithEmail() {
+      this.errors = []
+      !this.$v.name.required && this.errors.push('名前を入力してください')
+      !this.$v.name.maxLength && this.errors.push('名前は30文字以内で入力してください')
+      !this.$v.email.required && this.errors.push('メールアドレスを入力してください')
+      !this.$v.email.email && this.errors.push('メールアドレスの形式で入力してください')
+      !this.$v.password.required && this.errors.push('パスワードを入力してください')
+
+      this.$v.$touch() // バリデーションチェック
+      if (this.$v.$invalid) return
+
       await firebase.auth().createUserWithEmailAndPassword(this.email, this.password).then(async result => {
         const userInfo = {
           uid: result.user.uid,
           name: this.name
         }
-        console.log(userInfo)
         const db = firebase.firestore()
         const usersRef = db.collection('users').doc(result.user.uid)
         await usersRef.set(userInfo).then(res => {
