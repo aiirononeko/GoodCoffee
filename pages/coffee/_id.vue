@@ -19,7 +19,7 @@
     <div>
       <h2 class="title my-10">Score: {{ score }}</h2>
     </div>
-    <div v-if="uid === currentUser">
+    <div v-if="currentUser !== '' && uid === currentUser">
       <div class="flex-row mb-10">
         <button @click="shareOntoTwitter" class="flex-1 shadow focus:shadow-outline focus:outline-none bg-blue-400 hover:bg-blue-500 text-gray-100 font-bold py-2 px-10">Twitterに投稿する</button>
         <button @click="shareOntoFacebook" class="flex-1 shadow focus:shadow-outline focus:outline-none bg-indigo-400 hover:bg-indigo-500 text-gray-100 font-bold py-2 px-10">Facebookに投稿する</button>
@@ -68,7 +68,10 @@ export default {
       this.id = this.$route.params.id
 
       await firebase.auth().onAuthStateChanged(user => {
-        if (user) { this.uid = user.uid }
+        if (user) {
+          this.uid = user.uid
+          this.currentUser = firebase.auth().currentUser.uid
+        }
       })
 
       const db = firebase.firestore()
@@ -95,9 +98,6 @@ export default {
         this.score = doc.data().score
       })
     })
-  },
-  mounted() {
-    this.currentUser = firebase.auth().currentUser.uid
   },
   methods: {
     shareOntoFacebook() {
