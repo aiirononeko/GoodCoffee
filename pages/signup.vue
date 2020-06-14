@@ -49,8 +49,8 @@
 
     <p>------------------------------------------</p>
 
-    <button @click="loginWithTwitter" class="mt-10 mb-5 shadow focus:shadow-outline focus:outline-none bg-blue-400 hover:bg-blue-500 text-gray-100 font-bold py-2 px-10">Twitterアカウントで登録する</button>
-    <button @click="loginWithFacebook" class="mb-10 shadow focus:shadow-outline focus:outline-none bg-indigo-400 hover:bg-indigo-500 text-gray-100 font-bold py-2 px-8">Facebookアカウントで登録する</button>
+    <button @click="signUpWithTwitter" class="mt-10 mb-5 shadow focus:shadow-outline focus:outline-none bg-blue-400 hover:bg-blue-500 text-gray-100 font-bold py-2 px-10">Twitterアカウントで登録する</button>
+    <button @click="signUpWithFacebook" class="mb-10 shadow focus:shadow-outline focus:outline-none bg-indigo-400 hover:bg-indigo-500 text-gray-100 font-bold py-2 px-8">Facebookアカウントで登録する</button>
 
     <nuxt-link to="/">トップページに戻る</nuxt-link>
   </div>

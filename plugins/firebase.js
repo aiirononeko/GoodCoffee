@@ -12,7 +12,7 @@ var firebaseConfig = {
   measurementId: process.env.FIREBASE_MEASUREMENT_ID
 };
 
-export const twprovider = new firebase.auth.TwitterAuthProvider()
+export const twProvider = new firebase.auth.TwitterAuthProvider()
 export const fbProvider = new firebase.auth.FacebookAuthProvider()
 
 // Initialize Firebase
