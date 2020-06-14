@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <h2 class="title my-5">10gの豆を計量し、中粗挽きで挽きましょう</h2>
+    <h2 class="title my-10">10gの豆を計量し、中粗挽きで挽きましょう</h2>
     <h2 class="title my-5">ドライの状態のアロマはいかがですか？</h2>
     <div class="flex my-10 buttons">
       <button @click="setDryAromaForce" class="flex-1 shadow focus:shadow-outline focus:outline-none bg-pink-200 hover:bg-pink-300 text-gray-800 font-bold py-2 px-4 rounded-l buttons_item">強い</button>

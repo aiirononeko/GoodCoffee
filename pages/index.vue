@@ -56,7 +56,7 @@ export default Vue.extend({
           uid: res.user.uid,
           name: this.name
         }).then(res => {
-          this.$router.push(`/cupping/dryAroma`)
+          this.$router.push(`/cupping/roastLevel`)
         }).catch(err => {
           console.log(err.message)
         })
