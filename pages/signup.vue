@@ -47,12 +47,18 @@
       </div>
     </form>
 
+    <p>------------------------------------------</p>
+
+    <button @click="loginWithTwitter" class="mt-10 mb-5 shadow focus:shadow-outline focus:outline-none bg-blue-400 hover:bg-blue-500 text-gray-100 font-bold py-2 px-10">Twitterアカウントで登録する</button>
+    <button @click="loginWithFacebook" class="mb-10 shadow focus:shadow-outline focus:outline-none bg-indigo-400 hover:bg-indigo-500 text-gray-100 font-bold py-2 px-8">Facebookアカウントで登録する</button>
+
     <nuxt-link to="/">トップページに戻る</nuxt-link>
   </div>
 </template>
 
 <script>
 import firebase from '~/plugins/firebase'
+import { twProvider, fbProvider } from '~/plugins/firebase'
 import { required, email, maxLength } from 'vuelidate/lib/validators'
 
 export default {
@@ -111,7 +117,43 @@ export default {
       }).catch(err => {
         console.log(err.message)
       })
-    }
+    },
+    signUpWithTwitter() {
+      firebase.auth().signInWithPopup(twProvider).then(result => {
+        const user = result.user
+
+        const db = firebase.firestore()
+        const usersRef = db.collection('users').doc(result.user.uid)
+        usersRef.set({
+          uid: result.user.uid,
+          name: result.user.displayName,
+        }).then(res => {
+          this.$router.push(`/users/${result.user.uid}`)
+        }).catch(err => {
+          console.log(err.message)
+        })
+      }).catch(err => {
+        console.log(err.message)
+      })
+    },
+    signUpWithFacebook() {
+      firebase.auth().signInWithPopup(fbProvider).then(result => {
+        const user = result.user
+
+        const db = firebase.firestore()
+        const usersRef = db.collection('users').doc(result.user.uid)
+        usersRef.set({
+          uid: result.user.uid,
+          name: result.user.displayName,
+        }).then(res => {
+          this.$router.push(`/users/${result.user.uid}`)
+        }).catch(err => {
+          console.log(err.message)
+        })
+      }).catch(err => {
+        console.log(err.message)
+      })
+    },
   }
 }
 </script>
