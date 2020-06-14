@@ -61,10 +61,13 @@ export default {
       const db = firebase.firestore()
       const coffeeRef = db.collection('coffee')
       coffeeRef.add(this.$store.state.cuppingResult).then(res => {
-        console.log('success')
+        const resultData = {
+          result_id: res.id,
+          uid: firebase.auth().currentUser.uid
+        }
         const cuppingResultsRef
           = db.collection('users').doc(firebase.auth().currentUser.uid).collection('cupping_results').doc(res.id)
-        cuppingResultsRef.set({ result_id: res.id }) // カッピングリザルトをusersコレクションのサブコレクションとして保存
+        cuppingResultsRef.set(resultData) // カッピングリザルトをusersコレクションのサブコレクションとして保存
 
         this.$router.push(`/coffee/${res.id}`)
       }).catch(err => {
