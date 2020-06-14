@@ -1,4 +1,5 @@
 export const state = () => ({
+  uid: '',
   cupped: '',
   country: '',
   farmer: '',
@@ -21,6 +22,7 @@ export const state = () => ({
 })
 
 export const getters = {
+  uid: state => state.uid,
   copped: state => state.cupped,
   country: state => state.country,
   farmer: state => state.farmer,
@@ -43,6 +45,9 @@ export const getters = {
 }
 
 export const mutations = {
+  setUid(state, payload) {
+    state.uid = payload
+  },
   setCupped(state, payload) {
     state.cupped = payload
   },

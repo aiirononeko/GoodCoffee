@@ -16,7 +16,7 @@ service cloud.firestore {
 
     // coffeeコレクション用: スキーマ検証の関数
     function isValidCoffeeSchema(coffee) {
-      return coffee.size() == 19 // ドキュメントは19個のプロパティを持つこと
+      return coffee.size() == 20 // ドキュメントは19個のプロパティを持つこと
         && 'cleanCup' in coffee && coffee.cleanCup is int || coffee.cleanCup is float // cleanCupのプロパティがあり、cleanCupの型がnumber型
         && 'sweet' in coffee && coffee.sweet is int || coffee.sweet is float // sweetのプロパティがあり、sweetの型がnumber型
         && 'acidity' in coffee && coffee.acidity is int || coffee.acidity is float // acidityのプロパティがあり、acidityの型がnumber型

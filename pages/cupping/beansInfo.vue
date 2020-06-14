@@ -30,6 +30,7 @@ import firebase from '~/plugins/firebase'
 export default {
   data() {
     return {
+      uid: '',
       cupped: '',
       country: '',
       farmer: '',
@@ -39,10 +40,12 @@ export default {
     }
   },
   mounted() {
+    this.uid = firebase.auth().currentUser.uid
+
     /**
      * ユーザーネーム取得.
      */
-    const usersRef = firebase.firestore().collection('users').doc(firebase.auth().currentUser.uid)
+    const usersRef = firebase.firestore().collection('users').doc(this.uid)
     usersRef.get().then(doc => {
       if (doc) {
         this.cupped = doc.data().name
@@ -51,6 +54,7 @@ export default {
   },
   methods: {
     dispathBeansInfo() {
+      this.$store.commit('cuppingResult/setUid', this.uid)
       this.$store.commit('cuppingResult/setCupped', this.cupped)
       this.$store.commit('cuppingResult/setCountry', this.country)
       this.$store.commit('cuppingResult/setFarmer', this.farmer)
@@ -63,10 +67,10 @@ export default {
       coffeeRef.add(this.$store.state.cuppingResult).then(res => {
         const resultData = {
           result_id: res.id,
-          uid: firebase.auth().currentUser.uid
+          uid: this.uid
         }
         const cuppingResultsRef
-          = db.collection('users').doc(firebase.auth().currentUser.uid).collection('cupping_results').doc(res.id)
+          = db.collection('users').doc(this.uid).collection('cupping_results').doc(res.id)
         cuppingResultsRef.set(resultData) // カッピングリザルトをusersコレクションのサブコレクションとして保存
 
         this.$router.push(`/coffee/${res.id}`)
