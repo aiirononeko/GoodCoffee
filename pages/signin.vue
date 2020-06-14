@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <div>
-      <h2 class="title">ログインしましょう</h2>
+      <h2 class="title mt-10">ログインしましょう</h2>
     </div>
     
     <form class="w-full max-w-sm my-8">
