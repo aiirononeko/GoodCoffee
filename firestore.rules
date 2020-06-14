@@ -17,15 +17,15 @@ service cloud.firestore {
     // coffeeコレクション用: スキーマ検証の関数
     function isValidCoffeeSchema(coffee) {
       return coffee.size() == 19 // ドキュメントは19個のプロパティを持つこと
-        && 'cleanCup' in coffee && coffee.cleanCup is int // cleanCupのプロパティがあり、cleanCupの型がint型
-        && 'sweet' in coffee && coffee.sweet is int // sweetのプロパティがあり、sweetの型がint型
-        && 'acidity' in coffee && coffee.acidity is int // acidityのプロパティがあり、acidityの型がint型
-        && 'mouseFeel' in coffee && coffee.mouseFeel is int // mouseFeelのプロパティがあり、mouseFeelの型がint型
-        && 'flavor' in coffee && coffee.flavor is int // flavorのプロパティがあり、flavorの型がint型
-        && 'afterTaste' in coffee && coffee.afterTaste is int // afterTasteのプロパティがあり、afterTasteの型がint型
-        && 'balance' in coffee && coffee.balance is int // balanceのプロパティがあり、balanceの型がint型
-        && 'overAll' in coffee && coffee.overAll is int // overAllのプロパティがあり、overAllの型がint型
-        && 'score' in coffee && coffee.score is int // scoreのプロパティがあり、scoreの型がint型
+        && 'cleanCup' in coffee && coffee.cleanCup is int || coffee.cleanCup is float // cleanCupのプロパティがあり、cleanCupの型がnumber型
+        && 'sweet' in coffee && coffee.sweet is int || coffee.sweet is float // sweetのプロパティがあり、sweetの型がnumber型
+        && 'acidity' in coffee && coffee.acidity is int || coffee.acidity is float // acidityのプロパティがあり、acidityの型がnumber型
+        && 'mouseFeel' in coffee && coffee.mouseFeel is int || coffee.mouseFeel is float // mouseFeelのプロパティがあり、mouseFeelの型がnumber型
+        && 'flavor' in coffee && coffee.flavor is int || coffee.flavor is float // flavorのプロパティがあり、flavorの型がnumber型
+        && 'afterTaste' in coffee && coffee.afterTaste is int || coffee.afterTaste is float // afterTasteのプロパティがあり、afterTasteの型がnumber型
+        && 'balance' in coffee && coffee.balance is int || coffee.balance is float // balanceのプロパティがあり、balanceの型がnumber型
+        && 'overAll' in coffee && coffee.overAll is int || coffee.overAll is float // overAllのプロパティがあり、overAllの型がnumber型
+        && 'score' in coffee && coffee.score is int || coffee.score is float // scoreのプロパティがあり、scoreの型がnumber型
         && 'cupped' in coffee && coffee.cupped is string // cuppedのプロパティがあり、cuppedの型がstring型
         && 'dryAroma' in coffee && coffee.dryAroma is string // dryAromaのプロパティがあり、dryAromaの型がstring型
         && 'crustAroma' in coffee && coffee.crustAroma is string // crustAromaのプロパティがあり、crustAromaの型がstring型
@@ -33,7 +33,7 @@ service cloud.firestore {
         && 'roastLevel' in coffee && coffee.roastLevel is string // roastLevelのプロパティがあり、roastLevelの型がstring型
         && 'country' in coffee && coffee.country is string // countryのプロパティがあり、countryの型がstring型
         && 'farmer' in coffee && coffee.farmer is string // farmerのプロパティがあり、farmerの型がstring型
-        && 'elevation' in coffee && coffee.elevation is int // elevationのプロパティがあり、elevationの型がint型
+        && 'elevation' in coffee && coffee.elevation is number // elevationのプロパティがあり、elevationの型がnumber型
         && 'process' in coffee && coffee.process is string // processのプロパティがあり、processの型がstring型
         && 'variety' in coffee && coffee.variety is string // varietyのプロパティがあり、varietyの型がstring型
     }
@@ -77,7 +77,7 @@ service cloud.firestore {
 
       // cupping_resultsサブコレクション
       match /cupping_results/{resultId} {
-        allow read: if request.auth.uid != null && request.auth.uid == resource.data.uid;
+        allow read: if request.auth.uid != null;
         allow create: if request.auth.uid != null;
         allow update: if request.auth.uid != null;
         allow delete: if request.auth.uid != null && request.auth.uid == resource.data.uid;
@@ -89,7 +89,7 @@ service cloud.firestore {
       allow read: if true; // 誰でも閲覧可能
       allow create: if request.auth.uid != null
         && isValidCoffeeSchema(request.resource.data) && isValidCoffeeData(request.resource.data);
-      allow update: if request.auth.uid != null;
+      allow update: if request.auth.uid != null
         && isValidCoffeeSchema(request.resource.data) && isValidCoffeeData(request.resource.data);
       allow delete: if request.auth.uid != null;
     }
