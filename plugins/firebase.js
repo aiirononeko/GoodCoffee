@@ -15,6 +15,8 @@ var firebaseConfig = {
 export const twProvider = new firebase.auth.TwitterAuthProvider()
 export const fbProvider = new firebase.auth.FacebookAuthProvider()
 
+export const emCredential = firebase.auth.EmailAuthProvider
+
 // Initialize Firebase
 export default firebase.initializeApp(firebaseConfig);
 firebase.analytics();

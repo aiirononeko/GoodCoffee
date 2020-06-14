@@ -35,6 +35,9 @@ export default {
     firebase.auth().onAuthStateChanged(user => {
       if (user) {
         this.uid = user.uid
+        if (user.isAnonymous) {
+          this.$router.push('/signup')
+        }
         if (this.uid != this.$route.params.id) {
           this.$router.push(`/users/${this.uid}`) // 自分以外のマイページにアクセスできない
         }

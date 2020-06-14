@@ -24,7 +24,11 @@
         <button @click="shareOntoTwitter" class="flex-1 shadow focus:shadow-outline focus:outline-none bg-blue-400 hover:bg-blue-500 text-gray-100 font-bold py-2 px-10">Twitterに投稿する</button>
         <button @click="shareOntoFacebook" class="flex-1 shadow focus:shadow-outline focus:outline-none bg-indigo-400 hover:bg-indigo-500 text-gray-100 font-bold py-2 px-10">Facebookに投稿する</button>
       </div>
-      <nuxt-link :to="`/users/${uid}`">マイページに戻る</nuxt-link>
+      <nuxt-link v-if="!anonymous" :to="`/users/${uid}`">マイページに戻る</nuxt-link>
+      <div v-else>
+        <p>気に入っていただけましたか？アカウントを作成すればカッピングしたデータを保存できます。</p>
+        <button @click="goSignInPage" class="shadow focus:shadow-outline focus:outline-none bg-gray-300 hover:bg-gray-500 text-gray-800 font-bold py-2 px-8 rounded-l my-8 mx-10">アカウントを作成する</button>
+      </div>
     </div>
   </div>
 </template>
@@ -61,6 +65,7 @@ export default {
       balance: 0,
       overAll: 0,
       score: 0,
+      anonymous: false,
     }
   },
   async beforeCreate() {
@@ -70,6 +75,7 @@ export default {
       await firebase.auth().onAuthStateChanged(user => {
         if (user) {
           this.currentUser = user.uid
+          this.anonymous = user.isAnonymous
         }
       })
 
@@ -109,6 +115,9 @@ export default {
       const url = encodeURIComponent(location.href)
       const twiURL = `https://twitter.com/intent/tweet?text=「Good Coffee」でコーヒーをカッピングしました！&url=${url}`
       window.open(twiURL, '_blank')
+    },
+    goSignInPage() {
+      this.$router.push('/signup')
     }
   }
 }

@@ -58,7 +58,7 @@
 
 <script>
 import firebase from '~/plugins/firebase'
-import { twProvider, fbProvider } from '~/plugins/firebase'
+import { twProvider, fbProvider, emCredential, twCredential, fbCredential} from '~/plugins/firebase'
 import { required, email, maxLength } from 'vuelidate/lib/validators'
 
 export default {
@@ -67,7 +67,9 @@ export default {
       name: '',
       email: '',
       password: '',
-      errors: []
+      errors: [],
+      anonymous: false,
+      uid: '',
     }
   },
   validations: {
@@ -85,7 +87,17 @@ export default {
   },
   beforeMount() {
     firebase.auth().onAuthStateChanged(user => {
-      if (user) {
+      this.anonymous = user.isAnonymous
+      this.uid = user.uid
+
+      if (user && user.isAnonymous) {
+        const db = firebase.firestore()
+        const usersRef = db.collection('users').doc(user.uid)
+        usersRef.get().then(doc => {
+          this.name = doc.data().name
+        })
+      }
+      if (user && !user.isAnonymous) {
         this.$router.push(`/users/${user.uid}`)
       }
     })
@@ -102,21 +114,40 @@ export default {
       this.$v.$touch() // バリデーションチェック
       if (this.$v.$invalid) return
 
-      await firebase.auth().createUserWithEmailAndPassword(this.email, this.password).then(async result => {
-        const userInfo = {
-          uid: result.user.uid,
-          name: this.name
-        }
-        const db = firebase.firestore()
-        const usersRef = db.collection('users').doc(result.user.uid)
-        await usersRef.set(userInfo).then(res => {
-          this.$router.push(`/users/${result.user.uid}`)
+      if (!this.anonymous) {
+        await firebase.auth().createUserWithEmailAndPassword(this.email, this.password).then(async result => {
+          const userInfo = {
+            uid: result.user.uid,
+            name: this.name
+          }
+          const db = firebase.firestore()
+          const usersRef = db.collection('users').doc(result.user.uid)
+          await usersRef.set(userInfo).then(res => {
+            this.$router.push(`/users/${result.user.uid}`)
+          }).catch(err => {
+            console.log(err.message)
+          })
         }).catch(err => {
           console.log(err.message)
         })
-      }).catch(err => {
-        console.log(err.message)
-      })
+      } else { // 匿名ユーザーを永久アカウントにアップデートする処理
+        const credential = emCredential.credential(this.email, this.password)
+        await firebase.auth().currentUser.linkWithCredential(credential).then(async result => {
+          const userInfo = {
+            uid: result.user.uid,
+            name: this.name
+          }
+          const db = firebase.firestore()
+          const usersRef = db.collection('users').doc(result.user.uid)
+          await usersRef.set(userInfo).then(res => {
+            this.$router.push(`/users/${result.user.uid}`)
+          }).catch(err => {
+            console.log(err.message)
+          })
+        }).catch(err => {
+          console.log(err.message)
+        })
+      }
     },
     signUpWithTwitter() {
       firebase.auth().signInWithPopup(twProvider).then(result => {
