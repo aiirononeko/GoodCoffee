@@ -69,14 +69,14 @@ export default {
 
       await firebase.auth().onAuthStateChanged(user => {
         if (user) {
-          this.uid = user.uid
-          this.currentUser = firebase.auth().currentUser.uid
+          this.currentUser = user.uid
         }
       })
 
       const db = firebase.firestore()
       const coffeeRef = await db.collection('coffee').doc(this.id)
       await coffeeRef.get().then(doc => {
+        this.uid = doc.data().uid
         this.cupped = doc.data().cupped
         this.country = doc.data().country
         this.farmer = doc.data().farmer

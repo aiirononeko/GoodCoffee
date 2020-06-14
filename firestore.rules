@@ -36,6 +36,7 @@ service cloud.firestore {
         && 'elevation' in coffee && coffee.elevation is number // elevationのプロパティがあり、elevationの型がnumber型
         && 'process' in coffee && coffee.process is string // processのプロパティがあり、processの型がstring型
         && 'variety' in coffee && coffee.variety is string // varietyのプロパティがあり、varietyの型がstring型
+        && 'uid' in coffee && coffee.uid is string // uidのプロパティがあり、uidの型がstring型
     }
 
     // usersコレクション用: 値のバリデーションの関数
@@ -64,6 +65,7 @@ service cloud.firestore {
         && 0 <= coffee.balance && coffee.balance <= 8 // balanceは0~8以内であること
         && 0 <= coffee.overAll && coffee.overAll <= 8 // overAllは0~8以内であること
         && 0 <= coffee.score && coffee.score <= 100 // scoreは0~100以内であること
+        && 1 <= coffee.uid.size() && coffee.uid.size() <= 50 // uidは1文字以上50文字以内であること
     }
 
     // usersコレクション
