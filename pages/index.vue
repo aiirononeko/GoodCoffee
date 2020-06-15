@@ -5,8 +5,8 @@
         さあ、カッピングをはじめよう
       </h2>
       <div class="flex my-10">
-        <button @click="goSignin" class="flex-1 shadow focus:shadow-outline focus:outline-none bg-purple-400 hover:bg-purple-500 text-white-500 font-bold py-2 px-8 rounded-l mt-10">ログイン</button>
-        <button @click="goSignup" class="flex-1 shadow focus:shadow-outline focus:outline-none bg-purple-400 hover:bg-purple-500 text-white-500 font-bold py-2 px-8 rounded-l mt-10 ml-10">アカウントを作成</button>
+        <button @click="goSignin" class="flex-1 shadow focus:shadow-outline focus:outline-none bg-gray-500 hover:bg-gray-400 text-white-500 font-bold py-2 px-8 rounded-l mt-10">ログイン</button>
+        <button @click="goSignup" class="flex-1 shadow focus:shadow-outline focus:outline-none bg-gray-500 hover:bg-gray-400 text-white-500 font-bold py-2 px-8 rounded-l mt-10 ml-10">アカウントを作成</button>
       </div>
       <div>
         <form>
@@ -25,7 +25,7 @@
       </div>
       <div class="links">
         <nuxt-link class="mr-8" to="/terms">利用規約</nuxt-link>
-        <nuxt-link to="/">プライバシーポリシー</nuxt-link>
+        <nuxt-link to="/privacy">プライバシーポリシー</nuxt-link>
       </div>
     </div>
   </div>
