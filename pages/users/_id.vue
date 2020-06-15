@@ -1,11 +1,11 @@
 <template>
   <div class="container">
     <div>
-      <button @click="startCupping" class="shadow focus:shadow-outline focus:outline-none bg-blue-300 hover:bg-blue-500 text-gray-800 font-bold py-2 px-10 rounded-l start_button mt-10">カッピングを始める</button>
+      <button @click="startCupping" class="shadow focus:shadow-outline focus:outline-none bg-blue-300 hover:bg-blue-500 text-gray-800 font-bold py-2 px-10 rounded start_button mt-10">カッピングを始める</button>
     </div>
     <div>
-      <h2 class="title">{{ username }}さんがカッピングしたコーヒー</h2>
-      <div v-for="(result, i) in cuppingResult" :key="i">
+      <h2 class="title my-10">{{ username }}さんがカッピングしたコーヒー</h2>
+      <div class="my-10" v-for="(result, i) in cuppingResult" :key="i">
         <List :result_id="result" />
       </div>
     </div>
@@ -98,8 +98,8 @@ export default {
   font-size: 30px;
   color: #35495e;
   letter-spacing: 1px;
-  margin-top: 50px;
-  margin-bottom: 30px;
+  margin-top: 100px;
+  margin-bottom: 50px;
 }
 
 .container > button {
@@ -110,12 +110,22 @@ export default {
   color: #3490dc;
 }
 
+.start_button {
+  width: 35rem;
+  height: 5rem;
+}
+
 /** 
  * タブレット用ブレークポイント
  */
 @media screen and (max-width: 1179px) {
   .title {
-    font-size: 20px;
+    font-size: 25px;
+  }
+
+  .start_button {
+    width: 30rem;
+    height: 5rem;
   }
 }
 
@@ -123,12 +133,13 @@ export default {
  * スマホ用ブレークポイント
  */
 @media screen and (max-width: 767px) {
-  .title {
-    font-size: 25px;
-  }
-
   .user_form_items {
     width: 60%;
+  }
+
+  .start_button {
+    width: 15rem;
+    height: 5rem;
   }
 }
 </style>

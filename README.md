@@ -1,22 +1,23 @@
-# cupping_a_coffee
+# README
 
-> My striking Nuxt.js project
+## サービス名
+### GoodCoffee (グッドコーヒー)
+https://goodcoffee.dev
 
-## Build Setup
+## サービスの概要
+コーヒーのカッピングをアプリ上で簡単に行うことができます。
+アカウントを作成すれば、カッピングしたコーヒーの情報を管理することができます。
 
-```bash
-# install dependencies
-$ npm install
+## 使用技術
+### クライアント
+- Nuxt.js
 
-# serve with hot reload at localhost:3000
-$ npm run dev
+### mBaas
+- Firebase
+    - Firebase Authentication
+    - Firestore
+    - Firebase Hosting
 
-# build for production and launch server
-$ npm run build
-$ npm run start
-
-# generate static project
-$ npm run generate
-```
-
-For detailed explanation on how things work, check out [Nuxt.js docs](https://nuxtjs.org).
+## Qiita
+より詳細な内容はQiitaに投稿しています。
+(QiitaURL)

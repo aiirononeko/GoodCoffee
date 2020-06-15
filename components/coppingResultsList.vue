@@ -1,5 +1,5 @@
 <template>
-  <div class="flex bg-gray-100 text-gray-800 links" @click="goMoreInfo">
+  <div class="flex shadow focus:shadow-outline focus:outline-none bg-gray-200 font-bold py-2 px-10 links" @click="goMoreInfo">
     <h2 class="flex-1 bg-gray-200">{{ country }}</h2>
     <h2 class="flex-1 bg-gray-200">{{ farmer }}</h2>
     <h2 class="flex-1 bg-gray-200">{{ process }}</h2>
@@ -79,5 +79,32 @@ h2 {
 
 .links:hover {
   color: #3490dc;
+}
+
+.links {
+  width: 80rem;
+  padding-top: 40px;
+}
+
+/** 
+ * タブレット用ブレークポイント
+ */
+@media screen and (max-width: 1179px) {
+  .links {
+    width: 50rem;
+    padding-top: 40px;
+  }
+}
+
+/**
+ * スマホ用ブレークポイント
+ */
+@media screen and (max-width: 767px) {
+  .links {
+    width: 100%;
+    padding-top: 40px;
+    padding-right: 5px;
+    padding-left: 5px;
+  }
 }
 </style>
