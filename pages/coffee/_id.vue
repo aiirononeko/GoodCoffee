@@ -20,7 +20,7 @@
       <h2 class="title my-10">Score: {{ score }}</h2>
     </div>
     <div v-if="currentUser !== '' && uid === currentUser">
-      <div class="flex-row mb-10">
+      <div class="flex-row mb-10 sharebuttons">
         <button @click="shareOntoTwitter" class="flex-1 shadow focus:shadow-outline focus:outline-none bg-blue-400 hover:bg-blue-500 text-gray-100 font-bold py-2 px-10">Twitterに投稿する</button>
         <button @click="shareOntoFacebook" class="flex-1 shadow focus:shadow-outline focus:outline-none bg-indigo-400 hover:bg-indigo-500 text-gray-100 font-bold py-2 px-10">Facebookに投稿する</button>
       </div>
@@ -161,13 +161,17 @@ export default {
     'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
   display: block;
   font-weight: 300;
-  font-size: 30px;
+  font-size: 40px;
   color: #35495e;
   letter-spacing: 1px;
 }
 
 a:hover {
   color: #3490dc;
+}
+
+.chart {
+  width: 50%;
 }
 
 /**
@@ -178,8 +182,12 @@ a:hover {
     font-size: 25px;
   }
 
-  .user_form_items {
-    width: 60%;
+  .sharebuttons > button {
+    margin-bottom: 20px;
+  }
+
+  .chart {
+    width: 80%;
   }
 }
 </style>
