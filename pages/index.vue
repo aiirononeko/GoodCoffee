@@ -54,7 +54,7 @@ export default Vue.extend({
         const usersRef = db.collection('users').doc(res.user.uid)
         await usersRef.set({
           uid: res.user.uid,
-          name: this.name
+          name: this.name !== '' ? this.name : '匿名'
         }).then(res => {
           this.$router.push(`/cupping/roastLevel`)
         }).catch(err => {
