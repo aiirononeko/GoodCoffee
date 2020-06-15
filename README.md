@@ -1,8 +1,8 @@
 # README
 
 ## サービス名
-### GoodCoffee
-#### https://goodcoffee.dev
+### GoodCoffee (グッドコーヒー)
+https://goodcoffee.dev
 
 ## サービスの概要
 コーヒーのカッピングをアプリ上で簡単に行うことができます。
