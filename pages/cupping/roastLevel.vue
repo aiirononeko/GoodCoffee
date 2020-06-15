@@ -6,7 +6,10 @@
       <button @click="setRoastLevelMedium" class="flex-1 shadow focus:shadow-outline focus:outline-none bg-yellow-600 hover:bg-yellow-700 text-yellow-300 font-bold py-2 px-10 buttons_item">ミディアム</button>
       <button @click="setRoastLevelLight" class="flex-1 shadow focus:shadow-outline focus:outline-none bg-yellow-400 hover:bg-yellow-500 text-black-100 font-bold py-2 px-10 buttons_item">ライト</button>
     </div>
-    <nuxt-link to="/cupping/dryAroma">次に進む</nuxt-link>
+    <p v-if="this.roastLeval !== ''">あなたは{{ this.roastLeval }}を選択しています</p>
+    <p v-else>ローストレベルを選択してください</p>
+    <nuxt-link class="mt-10 info" to="/cupping/dryAroma">次に進む</nuxt-link>
+    <p class="my-10 info">1 / 6</p>
   </div>
 </template>
 
@@ -50,7 +53,7 @@ export default {
     'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
   display: block;
   font-weight: 300;
-  font-size: 30px;
+  font-size: 40px;
   color: #35495e;
   letter-spacing: 1px;
 }
@@ -61,6 +64,10 @@ export default {
 
 a:hover {
   color: #3490dc;
+}
+
+.info {
+  font-size: 180%;
 }
 
 /** 
@@ -74,6 +81,10 @@ a:hover {
   .buttons {
     width: 70%;
   }
+
+  .info {
+    font-size: 150%;
+  }
 }
 
 /**
@@ -86,6 +97,10 @@ a:hover {
 
   .buttons {
     width: 100%;
+  }
+
+  .info {
+    font-size: 130%;
   }
 }
 </style>

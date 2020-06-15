@@ -1,26 +1,27 @@
 <template>
   <div class="container">
     <h2 class="title my-10">最後に、カッピングした豆の情報を教えてください</h2>
-    <div class="beans_infomations">
-      <form class="w-full max-w-sm mb-10">
-        <div class="flex items-center border-b border-b-2 border-teal-500 py-2">
+    <div class="beans_infomations mb-10">
+      <form class="w-full max-w-sm my-10">
+        <div class="flex items-center border-b border-b-2 border-teal-500 py-2 mb-5">
           <input v-model="country" class="appearance-none bg-transparent border-none w-full text-gray-700 mr-3 py-1 px-2 leading-tight focus:outline-none" type="text" placeholder="生産国">
         </div>
-        <div class="flex items-center border-b border-b-2 border-teal-500 py-2">
+        <div class="flex items-center border-b border-b-2 border-teal-500 py-2 mb-5">
           <input v-model="farmer" class="appearance-none bg-transparent border-none w-full text-gray-700 mr-3 py-1 px-2 leading-tight focus:outline-none" type="text" placeholder="農園・生産者">
         </div>
-        <div class="flex items-center border-b border-b-2 border-teal-500 py-2">
+        <div class="flex items-center border-b border-b-2 border-teal-500 py-2 mb-5">
           <input v-model="process" class="appearance-none bg-transparent border-none w-full text-gray-700 mr-3 py-1 px-2 leading-tight focus:outline-none" type="text" placeholder="プロセス">
         </div>
-        <div class="flex items-center border-b border-b-2 border-teal-500 py-2">
+        <div class="flex items-center border-b border-b-2 border-teal-500 py-2 mb-5">
           <input v-model="elevation" class="appearance-none bg-transparent border-none w-full text-gray-700 mr-3 py-1 px-2 leading-tight focus:outline-none" type="number" placeholder="標高">
         </div>
-        <div class="flex items-center border-b border-b-2 border-teal-500 py-2">
+        <div class="flex items-center border-b border-b-2 border-teal-500 py-2 mb-5">
           <input v-model="variety" class="appearance-none bg-transparent border-none w-full text-gray-700 mr-3 py-1 px-2 leading-tight focus:outline-none" type="text" placeholder="品種">
         </div>
       </form>
     </div>
-    <button @click="dispathBeansInfo" class="shadow focus:shadow-outline focus:outline-none bg-blue-300 hover:bg-blue-500 text-gray-800 font-bold py-2 px-10 rounded-l start_button mt-5">カッピングを終了する</button>
+    <button @click="dispathBeansInfo" class="shadow focus:shadow-outline focus:outline-none bg-blue-300 hover:bg-blue-500 text-gray-800 font-bold py-2 px-10 rounded-l start_button mt-5 end_button">カッピングを終了する</button>
+    <p class="info my-10">6 / 6</p>
   </div>
 </template>
 
@@ -98,14 +99,22 @@ export default {
     'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
   display: block;
   font-weight: 300;
-  font-size: 30px;
+  font-size: 40px;
   color: #35495e;
   letter-spacing: 1px;
 }
 
-.beans_information > input {
-  margin-top: 10px;
-  border: 1px #35495e solid;
+form {
+  width: 30rem;
+}
+
+.info {
+  font-size: 180%;
+}
+
+.end_button {
+  width: 30rem;
+  height: 4rem;
 }
 
 /**

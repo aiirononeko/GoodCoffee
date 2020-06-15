@@ -1,37 +1,44 @@
 <template>
   <div class="container">
     <div class="container" v-if="Number(this.time[1]) < 1">
-      <h2 class="title my-10">沸騰したお湯を150g注ぎます</h2>
-      <h2 class="title my-10">タイマーをスタートしましょう</h2>
+      <h2 class="title mt-10 mb-5">沸騰したお湯を150g注ぎます</h2>
+      <h2 class="title mb-10">タイマーをスタートしましょう</h2>
       <div class="timer my-10">{{ time }}</div>
       <button @click="timerStart" v-if="!isRunning" class="shadow focus:shadow-outline focus:outline-none bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded-l start_button">スタート</button>
-      <p class="my-10 text-green-600">タイマーが1分を経過すると次のアクションがあります</p>
+      <p class="mt-10 text-green-600">タイマーが1分を経過すると次のアクションがあります</p>
+      <p class="info my-10">3 / 6</p>
     </div>
     <div class="containers" v-if="Number(this.time[1]) >= 1 && Number(this.time[1]) < 4">
-      <h2 class="title my-10">1分経過しました</h2>
-      <h2 class="title my-10">クラストのアロマはいかがですか？</h2>
+      <h2 class="title mt-10 mb-5">1分経過しました</h2>
+      <h2 class="title mb-10">クラストのアロマはいかがですか？</h2>
       <div class="timer my-10">{{ time }}</div>
       <div class="flex buttons my-10">
         <button @click="setCrustForce" class="flex-1 shadow focus:shadow-outline focus:outline-none bg-pink-200 hover:bg-pink-300 text-gray-800 font-bold py-2 px-4 rounded-l buttons_item">強い</button>
         <button @click="setCrustMedium" class="flex-1 shadow focus:shadow-outline focus:outline-none bg-purple-200 hover:bg-purple-300 text-gray-800 font-bold py-2 px-4 rounded-l buttons_item">普通</button>
         <button @click="setCrustLight" class="flex-1 shadow focus:shadow-outline focus:outline-none bg-yellow-200 hover:bg-yellow-300 text-gray-800 font-bold py-2 px-4 rounded-l buttons_item">弱い</button>
       </div>
-      <p class="my-10 text-green-600">タイマーが4分を経過すると次のアクションがあります</p>
+      <p v-if="this.crustAroma !== ''">あなたは{{ this.crustAroma }}を選択しています</p>
+      <p v-else>香りの強さを選択してください</p>
+      <p class="mt-10 text-green-600">タイマーが4分を経過すると次のアクションがあります</p>
+      <p class="info my-10">3 / 6</p>
     </div>
     <div v-if="Number(this.time[1]) >= 4 && !isBreakDone">
-      <h2 class="title my-10">4分経過しました</h2>
-      <h2 class="title my-10">ブレイクのアロマはいかがですか？</h2>
+      <h2 class="title mt-10 mb-5">4分経過しました</h2>
+      <h2 class="title mb-10">ブレイクのアロマはいかがですか？</h2>
       <div class="timer my-10">{{ time }}</div>
       <div class="flex buttons my-10">
         <button @click="setBreakForce" class="flex-1 shadow focus:shadow-outline focus:outline-none bg-pink-200 hover:bg-pink-300 text-gray-800 font-bold py-2 px-4 rounded-l buttons_item">強い</button>
         <button @click="setBreakMedium" class="flex-1 shadow focus:shadow-outline focus:outline-none bg-purple-200 hover:bg-purple-300 text-gray-800 font-bold py-2 px-4 rounded-l buttons_item">普通</button>
         <button @click="setBreakLight" class="flex-1 shadow focus:shadow-outline focus:outline-none bg-yellow-200 hover:bg-yellow-300 text-gray-800 font-bold py-2 px-4 rounded-l buttons_item">弱い</button>
       </div>
-      <button @click="breakDone" class="next">次に進む</button>
+      <p v-if="this.breakAroma !== ''">あなたは{{ this.breakAroma }}を選択しています</p>
+      <p v-else>香りの強さを選択してください</p>
+      <button @click="breakDone" class="next mt-10">次に進む</button>
+      <p class="info my-10">4 / 6</p>
     </div>
     <div class="container" v-if="isBreakDone">
-      <h2 class="title my-10">それではテイスティングをはじめましょう</h2>
-      <h2 class="title my-10">各項目を評価してください</h2>
+      <h2 class="title mt-10 mb-5">それではテイスティングをはじめましょう</h2>
+      <h2 class="title mb-10">各項目を評価してください</h2>
       <div class="timer my-10">{{ time }}</div>
       <div class="cupping_items my-5">
         <div class="flex custom_flex">
@@ -256,6 +263,7 @@
         </div>
       </div>
       <button @click="dispatchResult" class="next m-5 mb-10">次に進む</button>
+      <p class="info my-10">5 / 6</p>
     </div>
   </div>
 </template>
@@ -353,7 +361,7 @@ export default {
     'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
   display: block;
   font-weight: 300;
-  font-size: 30px;
+  font-size: 40px;
   color: #35495e;
   letter-spacing: 1px;
 }
@@ -368,6 +376,10 @@ export default {
 
 .next:hover {
   color: #3490dc;
+}
+
+.info {
+  font-size: 180%;
 }
 
 /** 
@@ -385,6 +397,10 @@ export default {
   .custom_flex {
     flex-direction: column;
     margin: 0;
+  }
+
+  .info {
+    font-size: 150%;
   }
 }
 
@@ -406,6 +422,10 @@ export default {
   .cupping_item {
     margin: 0;
     margin-bottom: 10px;
+  }
+
+  .info {
+    font-size: 150%;
   }
 }
 </style>
