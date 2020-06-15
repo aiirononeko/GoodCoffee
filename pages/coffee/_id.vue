@@ -171,7 +171,8 @@ a:hover {
 }
 
 .chart {
-  width: 50%;
+  width: 40%;
+  max-width: 800px;
 }
 
 /**
@@ -188,6 +189,7 @@ a:hover {
 
   .chart {
     width: 80%;
+    max-width: 300px;
   }
 }
 </style>
