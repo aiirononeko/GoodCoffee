@@ -1,13 +1,16 @@
 <template>
   <div class="container">
-    <h2 class="title my-10">10gの豆を計量し、中粗挽きで挽きましょう</h2>
-    <h2 class="title my-5">ドライの状態のアロマはいかがですか？</h2>
+    <h2 class="title mt-10 mb-5">10gの豆を計量し、中粗挽きで挽きましょう</h2>
+    <h2 class="title mb-10">ドライの状態のアロマはいかがですか？</h2>
     <div class="flex my-10 buttons">
       <button @click="setDryAromaForce" class="flex-1 shadow focus:shadow-outline focus:outline-none bg-pink-200 hover:bg-pink-300 text-gray-800 font-bold py-2 px-4 rounded-l buttons_item">強い</button>
       <button @click="setDryAromaMedium" class="flex-1 shadow focus:shadow-outline focus:outline-none bg-purple-200 hover:bg-purple-300 text-gray-800 font-bold py-2 px-4 rounded-l buttons_item">普通</button>
       <button @click="setDryAromaLight" class="flex-1 shadow focus:shadow-outline focus:outline-none bg-yellow-200 hover:bg-yellow-300 text-gray-800 font-bold py-2 px-4 rounded-l buttons_item">弱い</button>
     </div>
-    <nuxt-link to="/cupping/timer">次に進む</nuxt-link>
+    <p v-if="this.dryAroma !== ''">あなたは{{ this.dryAroma }}を選択しています</p>
+    <p v-else>香りの強さを選択してください</p>
+    <nuxt-link class="info mt-10" to="/cupping/timer">次に進む</nuxt-link>
+    <p class="my-10 info">2 / 6</p>
   </div>
 </template>
 
@@ -51,7 +54,7 @@ export default {
     'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
   display: block;
   font-weight: 300;
-  font-size: 30px;
+  font-size: 40px;
   color: #35495e;
   letter-spacing: 1px;
 }
@@ -62,6 +65,10 @@ export default {
 
 a:hover {
   color: #3490dc;
+}
+
+.info {
+  font-size: 180%;
 }
 
 /** 
@@ -75,6 +82,10 @@ a:hover {
   .buttons {
     width: 70%;
   }
+
+  .info {
+    font-size: 150%;
+  }
 }
 
 /**
@@ -87,6 +98,10 @@ a:hover {
 
   .buttons {
     width: 100%;
+  }
+
+  .info {
+    font-size: 130%;
   }
 }
 </style>
