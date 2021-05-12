@@ -13,7 +13,7 @@
   "dependencies": {
     "@nuxtjs/dotenv": "^1.4.0",
     "@types/chart.js": "^2.9.21",
-    "chart.js": "^2.9.3",
+    "chart.js": "^2.9.4",
     "easytimer.js": "^4.1.1",
     "firebase": "^7.15.0",
     "nuxt": "^2.0.0",
